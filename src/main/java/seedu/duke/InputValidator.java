@@ -10,10 +10,9 @@ public class InputValidator {
      * "compare user1 user2"
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format.
+     * @throws InvalidFormatException If the input does not match the expected format: "compare (user1) (user2)".
      */
     public static void validateCompareInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^compare\\s+\\w+\\s+\\w+$";
 
         if (!input.matches(regex)) {
@@ -24,14 +23,14 @@ public class InputValidator {
 
     /**
      * Validates correctly formatted addTask command. The expected format is
-     * "addtask /on [date] /task [description] /from [start time] /to [start time]" format
+     * "addtask /on [date] /task [description] /from [start time] /to [start time] /type [type]" format
      * Note: Start and End times should be formatted as such: HH:mm
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format.
+     * @throws InvalidFormatException If the input does not match the expected format:
+     * "addtask /on (day) /task (description) /from (start time) /to (end time) /type (type)".
      */
     public static void validateAddTaskInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^addtask\\s+/on\\s+(\\w+)\\s+/task\\s+(.+?)\\s" +
                 "+/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})(\\s+/type\\s+[fc])$";
 
@@ -48,10 +47,9 @@ public class InputValidator {
      * Note: index is the index of the task in the task list for the given day
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format.
+     * @throws InvalidFormatException If the input does not match the expected format: "deletetask /on (day) /index (task index)".
      */
     public static void validateDeleteTaskInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^deletetask\\s+/on\\s+(\\w+)\\s+/index\\s+(\\d+)$";
 
         if (!input.matches(regex)) {
@@ -64,10 +62,9 @@ public class InputValidator {
      * Validates correctly formatted addUser command. The expected format is "adduser user"
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format.
+     * @throws InvalidFormatException If the input does not match the expected format: "adduser (user)".
      */
     public static void validateAddUserInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^adduser\\s+\\w+$";
 
         if (!input.matches(regex)) {
@@ -80,10 +77,9 @@ public class InputValidator {
      * Validates correctly formatted switch command. The expected format is "switch user"
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format.
+     * @throws InvalidFormatException If the input does not match the expected format: "switch (user)".
      */
     public static void validateSwitchInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^switch\\s+\\w+$";
 
         if (!input.matches(regex)) {
