@@ -35,12 +35,13 @@ public class UI {
     }
 
     public static void printHelp() {
-        System.out.println("List of available commands: \n" +
-                //"\n" +
+        System.out.println("Note: use hh:mm 24hr time format (ex. 13:00) \n" +
+                "List of available commands: \n" +
                 "list: list all users \n" +
                 "bye: exit the app \n" +
                 "current: view current user \n" +
                 "view: view timetable of current user \n" +
+                "next: view your next task \n" +
                 "adduser: add new user \n" +
                 "switch <username>: switch to user \n" +
                 "addtask /on <day> /from <start time> /to <end time>: add task for current user\n" +
@@ -50,7 +51,8 @@ public class UI {
                 "compareall: compare timetables of all users \n" +
                 "compare <user1> <user2>: compare timetables of specified users \n" +
                 "addforall /on <day> /from <start time> /to <end time>: add task for all users\n" +
-                "viewcommonevents: view common events \n");
+                "viewcommonevents: view common events ");
+        printLine();
     }
 
     public static void printAddForAll(Task task) {
@@ -59,6 +61,7 @@ public class UI {
 
     public static void printEmptyDirectory() {
         System.out.println("Directory is empty.");
+    }
 
     public static void printLine() {
         System.out.println("____________________________________________________________");
@@ -81,5 +84,13 @@ public class UI {
 
     public static void printComparingAll() {
         System.out.println("Comparing all timetables: ");
+    }
+
+    public static void printNext() {
+        System.out.println("Your next task is: ");
+    }
+
+    public static void printNoTasks() {
+        System.out.println("You have no tasks today. ");
     }
 }

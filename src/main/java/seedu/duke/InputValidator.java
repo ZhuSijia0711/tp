@@ -36,8 +36,8 @@ public class InputValidator {
                 "+/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})(\\s+/type\\s+[fc])$";
 
         if (!input.matches(regex)) {
-            throw new InvalidFormatException("[ERROR] Invalid addTask format. " +
-                    "Expected format: addTask /on [day] /task [description] /from [start time] /to [end time] " +
+            throw new InvalidFormatException("[ERROR] Invalid addtask format. " +
+                    "Expected format: addtask /on [day] /task [description] /from [start time] /to [end time] " +
                     "/type [f/c]");
         }
     }
@@ -160,7 +160,7 @@ public class InputValidator {
                 "+/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})$";
 
         if (!input.matches(regex)) {
-            throw new InvalidFormatException("[ERROR] Invalid addTask format. " +
+            throw new InvalidFormatException("[ERROR] Invalid addtask format. " +
                     "Expected format: addforall /on [day] /task [description] /from [start time] /to [end time] " +
                     "/type [f/c]");
         }
