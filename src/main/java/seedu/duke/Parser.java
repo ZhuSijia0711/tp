@@ -6,13 +6,16 @@ import seedu.duke.exceptions.InvalidUserException;
 import seedu.duke.ui.UI;
 
 import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
 
     protected static final String[] DAYS = new String[]
-        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+            {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     /**
      * Parses User Input and Identifies the command used.
@@ -33,6 +36,8 @@ public class Parser {
             UI.printActiveUser(userList.getActiveUser().getName());
         } else if (command.equalsIgnoreCase("view")) {
             userList.getActiveUser().viewTimetable();
+        } else if (command.equalsIgnoreCase("next")) {
+            printNextTask(userList.getActiveUser());
         } else if (command.toLowerCase().startsWith("adduser")) {
             InputValidator.validateAddUserInput(command);
             String[] parts = command.split("\\s+");
@@ -63,20 +68,15 @@ public class Parser {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
-            try {
-                InputValidator.validateCompareInput(command);
-                String[] parts = command.split("\\s+");
-                String user1 = parts[1];
-                String user2 = parts[2];
-                InputValidator.validateUserInput(user1, userList);
-                InputValidator.validateUserInput(user2, userList);
-                UI.printSharedTime(Timetable.compareTimetable(userList.findUser(user1).getTimetable(),
-                        userList.findUser(user2).getTimetable()));
 
-            } catch (InvalidFormatException | InvalidUserException | NullPointerException e) {
-                System.out.println(e.getMessage());
-            }
-
+            InputValidator.validateCompareInput(command);
+            String[] parts = command.split("\\s+");
+            String user1 = parts[1];
+            String user2 = parts[2];
+            InputValidator.validateUserInput(user1, userList);
+            InputValidator.validateUserInput(user2, userList);
+            UI.printSharedTime(Timetable.compareTimetable(userList.findUser(user1).getTimetable(),
+                    userList.findUser(user2).getTimetable()));
         } else if (command.toLowerCase().startsWith("addforall")) {
             addTaskForAll(command, userList);
         } else if (command.toLowerCase().startsWith("viewcommonevents")) {
@@ -115,15 +115,14 @@ public class Parser {
         }
     }
 
-    private static void addTask(String command, UserList userList) {
-        try {
-            InputValidator.validateAddTaskInput(command);
-            Task task = parseTask(command);
-            userList.getActiveUser().getTimetable().addUserTask(task.day, task);
-            UI.printAddTask(task);
-        } catch (InvalidFormatException | InvalidDayException e) {
-            System.out.println(e.getMessage());
-        }
+    private static void addTask(String command, UserList userList) throws
+            InvalidDayException, InvalidFormatException {
+
+        InputValidator.validateAddTaskInput(command);
+        Task task = parseTask(command);
+        userList.getActiveUser().getTimetable().addUserTask(task.day, task);
+        UI.printAddTask(task);
+
     }
 
     public static Task parseTask(String command) throws InvalidDayException {
@@ -226,5 +225,36 @@ public class Parser {
                 }
             }
         }
+    }
+
+    private static void printNextTask(User currentUser) {
+        LocalTime currentTime = LocalTime.now();
+        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString().toLowerCase();
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        Task current = new Task("temp", dayOfWeek, currentTime.toString(), currentTime.toString(), "f");
+
+        ArrayList<Task> tasksOfDay = currentUser.getTimetable().getWeeklyTasks().get(capitalizedDay);
+        int numOfTasks = tasksOfDay.size();
+
+        if (numOfTasks == 0) {
+            UI.printNoTasks();
+        } else {
+            Task nextTask = null;
+            for (int i = numOfTasks - 1; i >= 0; i -= 1) {
+                if (current.getStartTime().isBefore(tasksOfDay.get(i).getStartTime())) {
+                    nextTask = tasksOfDay.get(i);
+                } else {
+                    UI.printNext();
+                    if (nextTask == null) {
+                        UI.printNoTasks();
+                    } else {
+                        System.out.println(nextTask.toString());
+                    }
+                    return;
+                }
+            }
+        }
+
+
     }
 }
