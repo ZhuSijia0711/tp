@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.ui.UI;
 
 import java.time.LocalTime;
 
@@ -15,7 +16,7 @@ class TimetableTest {
 
         timetable.addUserTask("Tuesday", task);
 
-        timetable.printTasksOfTheDay("Tuesday");
+        UI.printTasksOfTheDay("Tuesday", timetable.getWeeklyTasks());
         assertEquals(1, timetable.getWeeklyTasks().get("Tuesday").size());
         assertEquals(task, timetable.getWeeklyTasks().get("Tuesday").get(0));
     }

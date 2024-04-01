@@ -3,6 +3,10 @@ package seedu.duke.ui;
 import seedu.duke.Task;
 import seedu.duke.Timetable;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Map;
+
 import static seedu.duke.Timetable.findOverlappingFreeTime;
 
 public class UI {
@@ -76,6 +80,7 @@ public class UI {
      */
     public static void printSharedTime(Timetable merged) {
         for (String day : Timetable.DAYS) {
+            System.out.println("_________________________________________");
             System.out.println("Shared free time on " + day + ":");
             findOverlappingFreeTime(merged.getWeeklyTasks().get(day), day);
 
@@ -84,6 +89,45 @@ public class UI {
 
     public static void printComparingAll() {
         System.out.println("Comparing all timetables: ");
+    }
+
+    /**
+     * Prints tasks of the day specified.
+     *
+     * @param day day of the week the task is on.
+     */
+    public static void printTasksOfTheDay(String day, Map<String, ArrayList<Task>> weeklyTask) {
+        String capitalizedDay = day.substring(0, 1).toUpperCase() + day.substring(1);
+        if (weeklyTask.get(capitalizedDay).isEmpty()) {
+            UI.printNoTask(day);
+            return;
+        }
+        System.out.println("_________________________________________");
+        UI.printDayHeader(capitalizedDay);
+        int count = 1;
+        for (Task task : weeklyTask.get(capitalizedDay)) {
+            UI.printTaskInList(count, task.toString());
+            count++;
+        }
+    }
+
+    public static void printTimeFrame(LocalTime time1, String time2) {
+        System.out.println("    "+time1 + " - " + time2);
+    }
+    public static void printTimeFrame(LocalTime time1, LocalTime time2) {
+        System.out.println("    "+time1 + " - " + time2);
+    }
+    public static void printFreeDay(String day) {
+        System.out.println("    ** Whole day is free on " + day);
+    }
+    public static void printNoTask(String day) {
+        System.out.println("No task for " + day + "!");
+    }
+    public static void printDayHeader(String day) {
+        System.out.println(day + " :");
+    }
+    public static void printTaskInList(int count, String task) {
+        System.out.println("    "+count + ". " + task);
     }
 
     public static void printNext() {
