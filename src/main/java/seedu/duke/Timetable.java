@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.ui.UI;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,25 +30,6 @@ public class Timetable {
     }
 
     /**
-     * Prints tasks of the day specified.
-     *
-     * @param day day of the week the task is on.
-     */
-    public void printTasksOfTheDay(String day) {
-        String capitalizedDay = day.substring(0, 1).toUpperCase() + day.substring(1);
-        if (weeklyTasks.get(capitalizedDay).isEmpty()) {
-            System.out.println("NO TASK FOR " + day);
-            return;
-        }
-        System.out.println(capitalizedDay + ":");
-        int count = 1;
-        for (Task task : weeklyTasks.get(capitalizedDay)) {
-            System.out.println(count + ". " + task.toString());
-            count++;
-        }
-    }
-
-    /**
      * Adds task on dayOfWeek at an index
      *
      * @param dayOfWeek first Timetable.
@@ -71,7 +54,7 @@ public class Timetable {
             weeklyTasks.get(capitalizedDay).remove(index);
             System.out.println("Task " + taskDeleted.description + " is deleted from " + dayOfWeek);
             System.out.println("New task list for " + capitalizedDay + ":");
-            printTasksOfTheDay(dayOfWeek);
+            UI.printTasksOfTheDay(dayOfWeek, getWeeklyTasks());
         } else {
             System.out.println("Invalid task index. Please try again.");
         }
@@ -149,17 +132,18 @@ public class Timetable {
             LocalTime previousEndTime = LocalTime.MIN;
             for (Task task : tasks) {
                 if (task.getStartTime().isAfter(previousEndTime)) {
-                    System.out.println(previousEndTime + " - " + task.getStartTime() + ": Overlapping Free Time");
+                    //System.out.println("    "+previousEndTime + " - " + task.getStartTime());
+                    UI.printTimeFrame(previousEndTime, task.getStartTime());
                 }
                 previousEndTime = task.getEndTime();
             }
             if (previousEndTime.isBefore(LocalTime.MAX)) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                System.out.println(previousEndTime + " - " + LocalTime.MAX.format(formatter) +
-                        ": Overlapping Free Time");
+                //System.out.println("    "+previousEndTime + " - " + LocalTime.MAX.format(formatter));
+                UI.printTimeFrame(previousEndTime, LocalTime.MAX.format(formatter));
             }
         } else {
-            System.out.println("** Whole day is free on " + day);
+            UI.printFreeDay(day);
         }
     }
 
