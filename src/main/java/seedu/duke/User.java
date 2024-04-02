@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.ui.UI;
+
 public class User {
     private Timetable timetable;
     private final String name;
@@ -22,7 +24,7 @@ public class User {
 
     public void viewTimetable() {
         for (String day : Timetable.DAYS) {
-            timetable.printTasksOfTheDay(day);
+            UI.printTasksOfTheDay(day, timetable.getWeeklyTasks());
         }
     }
 
