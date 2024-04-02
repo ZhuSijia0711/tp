@@ -22,7 +22,6 @@ public class UserList {
             activeUser = user;
         } else {
             throw new InvalidUserException("User does not exist!");
-            //System.out.println("User does not exist!");
         }
     }
 

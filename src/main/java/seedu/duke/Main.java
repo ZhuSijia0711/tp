@@ -5,7 +5,7 @@ import seedu.duke.ui.UI;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Duke {
+public class Main {
     static final Scanner IN = new Scanner(System.in);
     static boolean isFinished = false;
 

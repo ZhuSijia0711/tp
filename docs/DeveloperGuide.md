@@ -87,3 +87,21 @@ Here is how this method works:
 5. The Task object modifies the type of the task to the new type specified by the Parser.
 
 6. Finally, the modified task or any relevant status information is returned to the Parser.
+
+## Next Command
+
+Proposed implementation
+
+The next command displays the next task of the current user based on the current time. Given below is how it works. 
+
+Step 1: The user launches the application, creates a user, and creates several tasks for the user. 
+
+Step 2: The user types the command 'next' to see their next task. 
+
+Step 3: The next command is triggered. It first determines the current day and takes the arraylist of tasks of the user's timetable on that day. 
+
+Step 4: It then loops through the tasks on that day, starting from the back (the later tasks), until the task's start time is before the current time. 
+
+Step 5: It displays the last task it looped though, or a special message if there is no task that day. 
+
+![NextCommand UML](NextCommand.png)
