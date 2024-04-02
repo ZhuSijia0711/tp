@@ -62,6 +62,13 @@ Example: `changetasktiming /on monday /index 1 /from 12:00 /to 13:00`
 
 Format:`changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 
+### view today's tasks: `todaytask`
+
+Format: `todaytask`
+
+### Adding a todo: `todo`
+Adds a new item to the list of todo items.
+
 Example: `changetasktype /on monday /index 1 /type c`
 
 ### add task which happens on multiple days into the timetable: `addrepeaettask`
