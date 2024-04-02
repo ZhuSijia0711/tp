@@ -32,5 +32,13 @@ class DukeTest {
         assertEquals(1, userList.getListLength());
         assertEquals(user, userList.getActiveUser());
         assertTrue(userList.getUsers().contains(user));
+
+        User user2 = new User("Test User 2");
+        userList.addUser(user2);
+
+        assertEquals(2, userList.getListLength());
+        assertEquals(user, userList.getActiveUser());
+        assertTrue(userList.getUsers().contains(user));
+        assertTrue(userList.getUsers().contains(user2));
     }
 }

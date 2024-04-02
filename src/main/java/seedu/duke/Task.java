@@ -10,7 +10,7 @@ public class Task {
     protected String type;
 
     /**
-     * Represents the constructor for Task class that takes in parameters inluding the description of the task,
+     * Represents the constructor for Task class that takes in parameters including the description of the task,
      * the day of the task, the starting time and the ending time of the task.
      *
      * @param description description of the task.
@@ -61,6 +61,9 @@ public class Task {
         return description;
     }
 
+    public String getDescription() {
+        return description;
+    }
     @Override
     public String toString() {
         return description + " (" + day + " from " + startTime + " to " + endTime + ")" + " type: " + type;
