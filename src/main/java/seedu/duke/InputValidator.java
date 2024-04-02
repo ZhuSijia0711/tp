@@ -170,7 +170,7 @@ public class InputValidator {
 
     public static void validateAddTaskForAll(String input) throws InvalidFormatException {
         String regex = "(?i)^addforall\\s+/on\\s+(\\w+)\\s+/task\\s+((.+)?)\\s" +
-                "/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})\\s+(/type\\s+[fc](\\s+)?)$";
+                "/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})\\s?";
 
         if (!input.matches(regex)) {
             throw new InvalidFormatException("[ERROR] Invalid addtask format. " +

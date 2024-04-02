@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import seedu.duke.exceptions.NoUserException;
 import seedu.duke.ui.UI;
 
 import java.io.FileNotFoundException;
@@ -28,6 +29,8 @@ public class Main {
                 String input = IN.nextLine();
                 Parser.parseCommand(input, userList);
 
+            } catch (NoUserException e) {
+                UI.printNoUsers();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

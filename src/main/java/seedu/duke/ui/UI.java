@@ -138,4 +138,8 @@ public class UI {
     public static void printNoTasks() {
         System.out.println("You have no tasks today. ");
     }
+
+    public static void printNoUsers() {
+        System.out.println("Please add a user before adding tasks.");
+    }
 }
