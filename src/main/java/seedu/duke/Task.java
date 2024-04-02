@@ -61,9 +61,6 @@ public class Task {
         return description;
     }
 
-    public String getDescription() {
-        return description;
-    }
     @Override
     public String toString() {
         return description + " (" + day + " from " + startTime + " to " + endTime + ")" + " type: " + type;

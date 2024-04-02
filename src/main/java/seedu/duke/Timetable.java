@@ -168,6 +168,31 @@ public class Timetable {
             UI.printFreeDay(day);
         }
     }
+    /**
+     * Adds a task to the timetable with duplication check.
+     *
+     * @param dayOfWeek The day of the week.
+     * @param task      The task to add.
+     * @return True if the task was added successfully, false if a duplicate was found.
+     */
+    public boolean addTaskWithDuplicationCheck(String dayOfWeek, Task task) {
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        ArrayList<Task> tasksOfDay = weeklyTasks.get(capitalizedDay);
+
+        // Check for duplicates
+        for (Task existingTask : tasksOfDay) {
+            if (existingTask.getDescription().equalsIgnoreCase(task.getDescription())
+                    && existingTask.getStartTime().equals(task.getStartTime())
+                    && existingTask.getEndTime().equals(task.getEndTime())) {
+                System.out.println("Duplicate task detected. Task not added.");
+                return false;
+            }
+        }
+
+        // No duplicate found, add the task
+        tasksOfDay.add(task);
+        return true;
+    }
 
 
 }

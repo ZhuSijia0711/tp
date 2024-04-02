@@ -56,15 +56,11 @@ public class Parser {
             addTask(command, userList);
             User currentUser = userList.getActiveUser();
             currentUser.getStorage().writeTaskInFile(currentUser);
-        } else if (command.toLowerCase().startsWith("deletetask")) {
-            deleteTask(command, userList);
-<<<<<<< HEAD
-        } else if (command.toLowerCase().startsWith("addtwdc")) {
+        } else if  (command.toLowerCase().startsWith("addtwdc")) {
             addTaskWithDuplicationCheck(command, userList);
-        } else if(command.toLowerCase().startsWith("changetasktiming")){
-=======
+        }else if (command.toLowerCase().startsWith("deletetask")) {
+            deleteTask(command, userList);
         } else if (command.toLowerCase().startsWith("changetasktiming")) {
->>>>>>> 35e94f00ac998b11547605703311e15c5c33f6ba
             changeTaskTiming(command, userList);
         } else if (command.toLowerCase().startsWith("addrepeattask")) {
             addRepeatTask(command, userList);
@@ -74,7 +70,6 @@ public class Parser {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
-
             InputValidator.validateCompareInput(command);
             String[] parts = command.split("\\s+");
             String user1 = parts[1];
@@ -91,6 +86,7 @@ public class Parser {
             UI.printInvalidCommand();
         }
     }
+
 
     private static void changeTaskType(String command, UserList userList) throws InvalidFormatException {
         try {
@@ -121,36 +117,36 @@ public class Parser {
         }
     }
 
-//    /**
-//     * Adds a task to the timetable with task duplication detection.
-//     *
-//     * @param command  The user input command.
-//     * @param userList The list of users.
-//     */
-//    /**
-//     * Adds a task to the timetable with duplication check.
-//     *
-//     * @param command  The user input command.
-//     * @param userList The list of users.
-//     */
-//    private void addTaskWithDuplicationCheck(String command, UserList userList) {
-//        try {
-//            InputValidator.validateAddTaskWDCInput(command);
-//            Task task = parseTask(command);
-//            boolean addedSuccessfully = userList.getActiveUser().getTimetable()
-//                    .addUserTaskWithDuplicationCheck(task.day, task);
-//
-//            if (addedSuccessfully) {
-//                UI.printAddTask(task);
-//            } else {
-//                System.out.println("Task already exists. Cannot add duplicate task.");
-//            }
-//        } catch (InvalidFormatException | InvalidDayException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    /**
+     * Adds a task to the timetable with task duplication detection.
+     *
+     * @param command  The user input command.
+     * @param userList The list of users.
+     */
+    /**
+     * Adds a task to the timetable with duplication check.
+     *
+     * @param command  The user input command.
+     * @param userList The list of users.
+     */
+    private static void addTaskWithDuplicationCheck(String command, UserList userList) {
+        try {
+            InputValidator.validateAddTaskWDCInput(command);
+            Task task = parseTask(command);
+            boolean addedSuccessfully = userList.getActiveUser().getTimetable()
+                    .addUserTaskWithDuplicationCheck(task.day, task);
 
-    private void addTask(String command, UserList userList) {
+            if (addedSuccessfully) {
+                UI.printAddTask(task);
+            } else {
+                System.out.println("Task already exists. Cannot add duplicate task.");
+            }
+        } catch (InvalidFormatException | InvalidDayException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void addTask(String command, UserList userList) {
         try {
             InputValidator.validateAddTaskInput(command);
             Task task = parseTask(command);
@@ -159,17 +155,7 @@ public class Parser {
         } catch (InvalidFormatException | InvalidDayException e) {
             System.out.println(e.getMessage());
         }
-//=======
-//    private static void addTask(String command, UserList userList) throws
-//            InvalidDayException, InvalidFormatException {
-//
-//        InputValidator.validateAddTaskInput(command);
-//        Task task = parseTask(command);
-//        userList.getActiveUser().getTimetable().addUserTask(task.day, task);
-//        UI.printAddTask(task);
-//
-//>>>>>>> 35e94f00ac998b11547605703311e15c5c33f6ba
-//    }
+    }
 
     public static Task parseTask(String command) throws InvalidDayException {
         String[] parts = command.split("\\s+");

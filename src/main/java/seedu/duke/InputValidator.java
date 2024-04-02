@@ -54,7 +54,7 @@ public class InputValidator {
 
         if (!input.matches(regex)) {
             throw new InvalidFormatException("[ERROR] Invalid addTaskWithDuplicationCheck format. " +
-                    "Expected format: addtaskwdc /on [day] /task [description] /from [start time] /to [end time] " +
+                    "Expected format: addtwdc /on [day] /task [description] /from [start time] /to [end time] " +
                     "/type [f/c]");
         }
     }

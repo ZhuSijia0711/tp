@@ -27,6 +27,10 @@ Example: `adduser /MIKE`
 
 Format: `addtask /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
 
+### adding a task with duplication check: `addtwdc'
+
+Format: `addtwdc /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+
 ### showing current user: `current`
 
 Format:`current`

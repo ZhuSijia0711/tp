@@ -49,6 +49,7 @@ public class UI {
                 "adduser: add new user \n" +
                 "switch <username>: switch to user \n" +
                 "addtask /on <day> /from <start time> /to <end time>: add task for current user\n" +
+                "addtwdc /on <day> /from <start time> /to <end time>" +
                 "deletetask: delete task \n" +
                 "changetasktiming: \n" +
                 "changetasktype <f/c>: change the type of a task (flexible/confirmed)\n" +
