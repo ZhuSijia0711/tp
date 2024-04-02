@@ -23,7 +23,7 @@ public class InputValidator {
 
     /**
      * Validates correctly formatted addTask command. The expected format is
-     * "addtask /on [date] /task [description] /from [start time] /to [start time] /type [type]" format
+     * "addtask /on [date] /task [description] /from [start time] /to [start time] /type [type]"
      * Note: Start and End times should be formatted as such: HH:mm
      * Regex Guide:
      * (?i)^ = case insensitive for command name
@@ -34,8 +34,7 @@ public class InputValidator {
      * (/type\s+[fc](\s+)?)$ = regex must end in "/type [f/c]"
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format:
-     * "addtask /on (day) /task (description) /from (start time) /to (end time) /type (type)".
+     * @throws InvalidFormatException If the input does not match the expected format.
      */
     public static void validateAddTaskInput(String input) throws InvalidFormatException {
         String regex = "(?i)^addtask\\s+/on\\s+(\\w+)\\s+/task\\s+((.+)?)\\s" +
@@ -65,7 +64,7 @@ public class InputValidator {
      * Note: index is the index of the task in the task list for the given day
      *
      * @param input String Input.
-     * @throws InvalidFormatException If the input does not match the expected format: "deletetask /on (day) /index (task index)".
+     * @throws InvalidFormatException If the input does not match the expected format.
      */
     public static void validateDeleteTaskInput(String input) throws InvalidFormatException {
         String regex = "(?i)^deletetask\\s+/on\\s+(\\w+)\\s+/index\\s+(\\d+)$";
@@ -153,7 +152,7 @@ public class InputValidator {
         }
     }
 
-    public static void validateChangeTaskTiming(String input) throws InvalidFormatException{
+    public static void validateChangeTaskTiming(String input) throws InvalidFormatException {
         String prefix = "(?i)^changeTaskTiming\\s+/on\\s+";
         String dayPattern = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)";
         String indexPattern = "\\d+";
@@ -192,7 +191,8 @@ public class InputValidator {
                     "Expected format: changeTaskType /on [day] /index [index] /type [f/c]");
         }
     }
-    public static void validateAddRepeatTask(String input) throws InvalidFormatException{
+
+    public static void validateAddRepeatTask(String input) throws InvalidFormatException {
         String regex = "(?i)^addrepeattask\\s+/task\\s+(.+?)\\s+/on\\s+(\\w+(\\s+\\w+)*)\\s+" +
                 "/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})\\s+/type\\s+([fc])$";
 

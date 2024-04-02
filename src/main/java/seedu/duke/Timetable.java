@@ -112,8 +112,8 @@ public class Timetable {
     /**
      * Compares and prints overlapping free time between two Timetables.
      *
-     * @param table1 first Timetable.
-     * @param table2 second Timetable
+     * @param table1 First Timetable.
+     * @param table2 Second Timetable
      * @return Returns a merged timetable comprising both input timetables.
      */
     public static Timetable compareTimetable(Timetable table1, Timetable table2) {
@@ -134,6 +134,12 @@ public class Timetable {
         return mergedTimetable;
     }
 
+    /**
+     * Compares and prints overlapping free time between all Timetables.
+     *
+     * @param userList List of all users.
+     * @return Returns a merged timetable comprising all timetables.
+     */
     public static Timetable compareAllTimetables(UserList userList) {
         Timetable mergedTimetable = new Timetable();
         for (User user : userList.getUsers()) {

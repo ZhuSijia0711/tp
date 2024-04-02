@@ -14,9 +14,9 @@ public class Task {
      * the day of the task, the starting time and the ending time of the task.
      *
      * @param description description of the task.
-     * @param day day of the task.
-     * @param from starting time of the task.
-     * @param to ending time of the task.
+     * @param day         day of the task.
+     * @param from        starting time of the task.
+     * @param to          ending time of the task.
      */
     public Task(String description, String day, String from, String to, String type) {
         this.description = description;
@@ -39,18 +39,20 @@ public class Task {
     public LocalTime getEndTime() {
         return endTime;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
     }
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-    public void setStartTime(LocalTime startTime){
+
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
     }
 
