@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Parser {
@@ -58,8 +59,13 @@ public class Parser {
             if (userList.getUsers().isEmpty()) {
                 throw new NoUserException();
             }
-            addTask(command, userList);
+            Task task = parseTask(command);
             User currentUser = userList.getActiveUser();
+            if (checkClash(task, currentUser)) {
+                UI.printClashTasks();
+                return;
+            }
+            addTask(command, userList);
             currentUser.getStorage().writeTaskInFile(currentUser);
         } else if  (command.toLowerCase().startsWith("addtwdc")) {
             addTaskWithDuplicationCheck(command, userList);
@@ -135,12 +141,6 @@ public class Parser {
      * @param command  The user input command.
      * @param userList The list of users.
      */
-    /**
-     * Adds a task to the timetable with duplication check.
-     *
-     * @param command  The user input command.
-     * @param userList The list of users.
-     */
     private static void addTaskWithDuplicationCheck(String command, UserList userList) {
         try {
             InputValidator.validateAddTaskWDCInput(command);
@@ -162,11 +162,27 @@ public class Parser {
         try {
             InputValidator.validateAddTaskInput(command);
             Task task = parseTask(command);
-            userList.getActiveUser().getTimetable().addUserTask(task.day, task);
+            User currentuser = userList.getActiveUser();
+            currentuser.getTimetable().addUserTask(task.day, task);
             UI.printAddTask(task);
+
         } catch (InvalidFormatException | InvalidDayException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static boolean checkClash(Task taskToBeAdded, User user) {
+        Timetable timetable = user.getTimetable();
+        String day = taskToBeAdded.day;
+        String capitalisedDay = day.substring(0, 1).toUpperCase() + day.substring(1);
+        timetable.getWeeklyTasks().get(capitalisedDay).sort(Comparator.comparing(Task::getStartTime));
+        for (Task task : timetable.getWeeklyTasks().get(capitalisedDay)) {
+            if (taskToBeAdded.startTime.isAfter(task.getStartTime()) && taskToBeAdded.startTime.isBefore(task.getEndTime())
+            || (taskToBeAdded.endTime.isAfter(task.getStartTime()) && taskToBeAdded.endTime.isBefore(task.getEndTime()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Task parseTask(String command) throws InvalidDayException {

@@ -142,4 +142,8 @@ public class UI {
     public static void printNoUsers() {
         System.out.println("Please add a user before adding tasks.");
     }
+
+    public static void printClashTasks() {
+        System.out.println("The task you want to add clashes with existing tasks. Please check again.");
+    }
 }
