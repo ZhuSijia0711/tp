@@ -16,7 +16,13 @@ import static seedu.duke.Parser.DAYS;
 
 
 public class Storage {
-    public static String filePath;
+    public static final int START_TIME_INDEX = 3;
+    public static final int END_TIME_INDEX_INCREMENT = 2;
+    public static final int END_TIME_END_INDEX = 16;
+    public static final int DESCRIPTION_INDEX = 18;
+    public static final int TYPE_INDEX_INCREMENT = 7;
+    public String filePath;
+    public static final String folderPath = "data";
 
     private static final String boxOutline = "+---------+\n";
 
@@ -26,12 +32,11 @@ public class Storage {
             ".................................................................................................\n";
 
     public Storage(String filePath) {
-        Storage.filePath = filePath;
+        this.filePath = filePath;
     }
 
 
     public static void createFolder() {
-        String folderPath = "data";
         File folder = new File(folderPath);
 
         if (!folder.exists()) {
@@ -47,8 +52,7 @@ public class Storage {
     }
 
     public static void addExistingUsers(UserList userList) throws FileNotFoundException {
-        String directoryPath = "data";
-        File directory = new File(directoryPath);
+        File directory = new File(folderPath);
 
         File[] files = directory.listFiles();
         if (files != null) {
@@ -59,7 +63,7 @@ public class Storage {
                     String userName = fileName.substring(0, indexOfDot);
                     User user = new User(userName);
                     userList.addUser(user);
-                    loadData(user);
+                    user.getStorage().loadData(user);
                 }
             }
         } else {
@@ -68,14 +72,14 @@ public class Storage {
 
     }
 
-    public static void loadData(User user) throws FileNotFoundException {
+    public void loadData(User user) throws FileNotFoundException {
         File f = new File(filePath);
         String day = "";
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
             String line = s.nextLine();
             // ignore lines for formatting and weeks that have no tasks
-            if (line.startsWith("+") || line.startsWith(".") || line.isEmpty() || line.equals("No task :)")) {
+            if (line.startsWith("Username") || line.startsWith("+") || line.startsWith(".") || line.isEmpty() || line.equals("No task :)")) {
                 continue;
             }
             if (line.startsWith("|")) {
@@ -86,15 +90,11 @@ public class Storage {
         }
     }
 
-    public static void addUserInFolder() {
+    public void addUserInFolder() {
         File f = new File(filePath);
         try {
             if (f.createNewFile()) {
                 System.out.println("File created: " + f.getName());
-                String fileName = f.getName();
-                int indexOfDot = fileName.indexOf(".");
-                String userName = fileName.substring(0, indexOfDot);
-                writeToFile(filePath, "Username: " + userName, true);
             }
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
@@ -110,11 +110,12 @@ public class Storage {
      */
     public static Task extractTaskInfo(String line, String day) {
         int indexOfDash = line.indexOf("-");
-        String startTime = line.substring(3, indexOfDash).trim();
-        String endTime = line.substring(indexOfDash + 2, 16).trim();
+        String startTime = line.substring(START_TIME_INDEX, indexOfDash).trim();
+        String endTime = line.substring(indexOfDash + END_TIME_INDEX_INCREMENT, END_TIME_END_INDEX).trim();
         int indexOfType = line.indexOf("(type:");
-        String description = line.substring(18, indexOfType).trim();
-        String type = line.substring(indexOfType + 7, indexOfType + 8);
+        String description = line.substring(DESCRIPTION_INDEX, indexOfType).trim();
+        int indexOfRightParenthesis = line.indexOf(")");
+        String type = line.substring(indexOfType + TYPE_INDEX_INCREMENT, indexOfRightParenthesis);
         return new Task(description, day, startTime, endTime, type);
     }
 
@@ -138,45 +139,41 @@ public class Storage {
      * @param user the user that the timetable belongs to.
      */
 
-    public void writeTaskInFile(User user) {
+    public void writeTaskInFile(User user) throws IOException {
         Timetable timetable = user.getTimetable();
-
-        try (FileWriter writer = new FileWriter(filePath)) {
-            for (String day : DAYS) {
-                String outline;
-                switch (day) {
-                case ("Wednesday"):
-                    outline = boxOutlineForWednesday;
-                    break;
-                case ("Friday"):
-                    outline = boxOutlineForFriday;
-                    break;
-                default:
-                    outline = boxOutline;
-                    break;
-                }
-                writeToFile(filePath, outline, true);
-                writeToFile(filePath, "| " + day + " |" + "\n", true);
-                writeToFile(filePath, outline, true);
-
-                if (timetable.getWeeklyTasks().get(day).isEmpty()) {
-                    writeToFile(filePath, "No task :)\n", true);
-                    writer.write("No task :)\n");
-                } else {
-                    int taskCount = 1;
-                    for (Task task : timetable.getWeeklyTasks().get(day)) {
-                        writer.write(taskCount + ". " + task.getStartTime() + " - " + task.getEndTime() +
-                                ": " + task.getDescription() + " (type: " + task.getType() + ")" + "\n");
-                        taskCount += 1;
-                    }
-                }
-                writer.write(lineSeparator);
-                writer.write("\n");
+        writeToFile(filePath, "Username: " + user.getName() + "\n", false);
+        for (String day : DAYS) {
+            String outline;
+            switch (day) {
+            case ("Wednesday"):
+                outline = boxOutlineForWednesday;
+                break;
+            case ("Friday"):
+                outline = boxOutlineForFriday;
+                break;
+            default:
+                outline = boxOutline;
+                break;
             }
+            writeToFile(filePath, outline, true);
+            writeToFile(filePath, "| " + day + " |" + "\n", true);
+            writeToFile(filePath, outline, true);
 
-            System.out.println("Timetable has been written to " + filePath);
-        } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            if (timetable.getWeeklyTasks().get(day).isEmpty()) {
+                writeToFile(filePath, "No task :)\n", true);
+            } else {
+                int taskCount = 1;
+                for (Task task : timetable.getWeeklyTasks().get(day)) {
+                    writeToFile(filePath, taskCount + ". " + task.getStartTime() + " - " + task.getEndTime() +
+                            ": " + task.getDescription() + " (type: " + task.getType() + ")" + "\n", true);
+                    taskCount += 1;
+                }
+            }
+            writeToFile(filePath, lineSeparator, true);
+            writeToFile(filePath, "\n", true);
         }
+
+        System.out.println("Timetable has been written to " + filePath);
+
     }
 }
