@@ -55,6 +55,10 @@ Format:`changetasktype /on DATE /index TASK_INDEX /type F_OR_C`
 
 Format:` addrepeattask /task TASK_NAME /on DATES /from START_TIME /to END_TIME /type F_OR_C`
 
+### view today's tasks: `todaytask`
+
+Format: `todaytask`
+
 ### Adding a todo: `todo`
 Adds a new item to the list of todo items.
 

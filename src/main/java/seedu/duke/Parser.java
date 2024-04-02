@@ -71,7 +71,10 @@ public class Parser {
             addRepeatTask(command, userList);
         } else if (command.toLowerCase().startsWith("changetasktype")) {
             changeTaskType(command, userList);
-        } else if (command.toLowerCase().startsWith("compareall")) {
+        } else if(command.toLowerCase().startsWith("todaytask")){
+            todaytask(userList);
+        }
+        else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
@@ -91,7 +94,6 @@ public class Parser {
             UI.printInvalidCommand();
         }
     }
-
 
     private static void changeTaskType(String command, UserList userList) throws InvalidFormatException {
         try {
@@ -188,6 +190,30 @@ public class Parser {
         return new Task(description, day, startTime, endTime, type);
     }
 
+    /**
+     * Prints tasks for today.
+     *
+     * @param userList The list of users.
+     */
+    public static void todaytask(UserList userList) {
+        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString().toLowerCase();
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        ArrayList<Task> tasksForToday = userList.getActiveUser().getTimetable().getWeeklyTasks().get(capitalizedDay);
+
+        if (tasksForToday.isEmpty()) {
+            UI.printNoTask("today");
+            return;
+        }
+
+        System.out.println("_________________________________________");
+        UI.printDayHeader("Today");
+        int count = 1;
+        for (Task task : tasksForToday) {
+            UI.printTaskInList(count, task.toString());
+            count++;
+        }
+    }
+
     private static void changeTaskTiming(String command, UserList userList) throws InvalidFormatException {
         try {
             InputValidator.validateChangeTaskTiming(command);
@@ -242,6 +268,8 @@ public class Parser {
         }
     }
 
+
+
     private static String parseDescription(List<String> words) {
         int startIndex = words.indexOf("/task") + 1;
         int endIndex = words.indexOf("/from") - 1;
@@ -254,6 +282,8 @@ public class Parser {
         }
         return description.toString();
     }
+
+
 
     private static void addTaskForAll(String command, UserList userList)
             throws InvalidFormatException, InvalidDayException, IOException {
