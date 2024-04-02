@@ -70,8 +70,6 @@ Format:` addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /t
 
 Example: `addrepeattask /task lecture /on monday tuesday /from 9:00 /to 11:00 /type c`
 
-### Adding a todo: `todo`
-Adds a new item to the list of todo items.
 
 ## FAQ
 
