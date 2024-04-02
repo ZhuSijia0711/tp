@@ -1,0 +1,19 @@
+@startuml
+object parser
+object inputValidator
+object userList
+object user
+object timetable
+object indexOutOfBoundsException
+object illegalArgumentException
+object localTime
+object task
+
+parser --> inputValidator
+parser --> userList
+userList --> user
+user --> timetable
+timetable --> task : weeklyTasks
+@enduml
+
+

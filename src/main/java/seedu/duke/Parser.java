@@ -53,6 +53,8 @@ public class Parser {
             addTask(command, userList);
         } else if (command.toLowerCase().startsWith("deletetask")) {
             deleteTask(command, userList);
+        } else if (command.toLowerCase().startsWith("addtwdc")) {
+            addTaskWithDuplicationCheck(command, userList);
         } else if(command.toLowerCase().startsWith("changetasktiming")){
             changeTaskTiming(command, userList);
         }  else if(command.toLowerCase().startsWith("addrepeattask")){
@@ -111,6 +113,35 @@ public class Parser {
             int index = Integer.parseInt(parts[4]);
             InputValidator.validateDay(day);
             userList.getActiveUser().getTimetable().deleteUserTask(day, index);
+        } catch (InvalidFormatException | InvalidDayException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Adds a task to the timetable with task duplication detection.
+     *
+     * @param command  The user input command.
+     * @param userList The list of users.
+     */
+    /**
+     * Adds a task to the timetable with duplication check.
+     *
+     * @param command  The user input command.
+     * @param userList The list of users.
+     */
+    private void addTaskWithDuplicationCheck(String command, UserList userList) {
+        try {
+            InputValidator.validateAddTaskWDCInput(command);
+            Task task = parseTask(command);
+            boolean addedSuccessfully = userList.getActiveUser().getTimetable()
+                    .addUserTaskWithDuplicationCheck(task.day, task);
+
+            if (addedSuccessfully) {
+                UI.printAddTask(task);
+            } else {
+                System.out.println("Task already exists. Cannot add duplicate task.");
+            }
         } catch (InvalidFormatException | InvalidDayException e) {
             System.out.println(e.getMessage());
         }

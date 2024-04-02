@@ -1,0 +1,39 @@
+@startuml
+title changeTaskTiming Sequence Diagram
+
+participant "Parser" as Caller
+participant "changeTaskTiming" as Method
+participant "changeFlexibleTaskTiming" as FlexibleMethod
+participant "InputValidator" as InputValidator
+participant "UserList" as UserList
+participant "User" as User
+participant "Timetable" as Timetable
+
+Caller -> Method: changeTaskTiming(command, userList)
+activate Method
+Method -> InputValidator: validateChangeTaskTiming(command)
+activate InputValidator
+Method -> InputValidator: command.split("\\s+")
+Method <-- InputValidator: parts[]
+Method -> InputValidator: Arrays.asList(parts)
+Method <-- InputValidator: wordList[]
+Method -> InputValidator: parts[2]
+Method -> InputValidator: parts[wordList.indexOf("/index") + 1]
+Method -> InputValidator: parts[wordList.indexOf("/from") + 1]
+Method -> InputValidator: parts[wordList.indexOf("/to") + 1]
+Method -> InputValidator: validateDay(day)
+deactivate InputValidator
+Method -> UserList: userList.getActiveUser()
+Method <-- UserList: activeUser
+Method -> User: activeUser.getTimetable()
+activate User
+Method <-- User: timetable
+Method -> FlexibleMethod: timetable.changeFlexibleTaskTiming(day, index - 1, newStartTime, newEndTime)
+activate FlexibleMethod
+FlexibleMethod <-- Timetable: successful change
+deactivate FlexibleMethod
+deactivate User
+Method -> System: println("Flexible task timing changed successfully.")
+deactivate Method
+
+@enduml
