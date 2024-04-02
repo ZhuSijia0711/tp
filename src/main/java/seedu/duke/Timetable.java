@@ -41,11 +41,33 @@ public class Timetable {
     }
 
     /**
-     * Deletes task on dayOfWeek at an index
+     * Adds a task to the timetable with duplication check.
      *
-     * @param dayOfWeek first Timetable.
-     * @param index     index of task within task list
+     * @param dayOfWeek The day of the week.
+     * @param task      The task to add.
+     * @return True if the task was added successfully, false if a duplicate was found.
      */
+    public boolean addUserTaskWithDuplicationCheck(String dayOfWeek, Task task) {
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        ArrayList<Task> tasksOfDay = weeklyTasks.get(capitalizedDay);
+        for (Task existingTask : tasksOfDay) {
+            if (existingTask.getDescription().equalsIgnoreCase(task.getDescription())
+                    && existingTask.getStartTime().equals(task.getStartTime())
+                    && existingTask.getEndTime().equals(task.getEndTime())) {
+                return false;
+            }
+        }
+        tasksOfDay.add(task);
+        return true;
+    }
+
+
+        /**
+         * Deletes task on dayOfWeek at an index
+         *
+         * @param dayOfWeek first Timetable.
+         * @param index     index of task within task list
+         */
     public void deleteUserTask(String dayOfWeek, int index) {
         String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
         //check if index is a valid number within a day's tasklist
@@ -152,4 +174,31 @@ public class Timetable {
             UI.printFreeDay(day);
         }
     }
+    /**
+     * Adds a task to the timetable with duplication check.
+     *
+     * @param dayOfWeek The day of the week.
+     * @param task      The task to add.
+     * @return True if the task was added successfully, false if a duplicate was found.
+     */
+    public boolean addTaskWithDuplicationCheck(String dayOfWeek, Task task) {
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        ArrayList<Task> tasksOfDay = weeklyTasks.get(capitalizedDay);
+
+        // Check for duplicates
+        for (Task existingTask : tasksOfDay) {
+            if (existingTask.getDescription().equalsIgnoreCase(task.getDescription())
+                    && existingTask.getStartTime().equals(task.getStartTime())
+                    && existingTask.getEndTime().equals(task.getEndTime())) {
+                System.out.println("Duplicate task detected. Task not added.");
+                return false;
+            }
+        }
+
+        // No duplicate found, add the task
+        tasksOfDay.add(task);
+        return true;
+    }
+
+
 }

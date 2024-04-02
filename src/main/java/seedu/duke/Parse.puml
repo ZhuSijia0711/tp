@@ -1,0 +1,43 @@
+@startuml
+participant UI
+participant Parser
+participant UserList
+participant Timetable
+participant InputValidator
+
+UI -> Parser: parseCommand(command, userList)
+activate Parser
+
+Parser -> UserList: setActiveUser(user)
+activate UserList
+UserList --> Parser: Confirmation
+
+alt command = "changeTaskType"
+    Parser -> InputValidator: validateChangeTaskType(command)
+    activate InputValidator
+    InputValidator -> Timetable: changeTaskType(dayOfWeek, index, newType)
+    activate Timetable
+    Timetable --> Parser: Success message
+    deactivate Timetable
+    InputValidator --> Parser: No exceptions thrown
+    deactivate InputValidator
+    Parser --> UI: "Task type changed successfully."
+else command = "deleteTask"
+    Parser -> InputValidator: validateDeleteTaskInput(command)
+    activate InputValidator
+    InputValidator -> Timetable: deleteUserTask(day, index)
+    activate Timetable
+    Timetable --> Parser: Success message
+    deactivate Timetable
+    InputValidator --> Parser: No exceptions thrown
+    deactivate InputValidator
+    Parser --> UI: Success message
+else
+    note right of Parser
+        Other command cases handled similarly
+    end note
+    Parser --> UI: Output message
+end
+
+deactivate Parser
+@enduml
