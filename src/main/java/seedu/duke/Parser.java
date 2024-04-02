@@ -3,8 +3,10 @@ package seedu.duke;
 import seedu.duke.exceptions.InvalidDayException;
 import seedu.duke.exceptions.InvalidFormatException;
 import seedu.duke.exceptions.InvalidUserException;
+import seedu.duke.exceptions.NoUserException;
 import seedu.duke.ui.UI;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
@@ -23,7 +25,7 @@ public class Parser {
      * @param command The users text input.
      */
     public static void parseCommand(String command, UserList userList) throws
-            InvalidFormatException, InvalidDayException, InvalidUserException {
+            InvalidFormatException, InvalidDayException, InvalidUserException, NoUserException, IOException {
         if (command.equalsIgnoreCase("list")) {
             UI.printListingUsers();
             userList.listAll();
@@ -45,7 +47,7 @@ public class Parser {
             User newUser = new User(userName);
             UI.printNewUser(newUser.getName());
             userList.addUser(newUser);
-            Storage.addUserInFolder();
+            newUser.getStorage().addUserInFolder();
         } else if (command.toLowerCase().startsWith("switch")) {
             InputValidator.validateSwitchInput(command);
             String[] parts = command.split("\\s+");
@@ -53,6 +55,9 @@ public class Parser {
             userList.setActiveUser(userList.findUser(userName));
             UI.printActiveUser(userList.getActiveUser().getName());
         } else if (command.toLowerCase().startsWith("addtask")) {
+            if (userList.getUsers().isEmpty()) {
+                throw new NoUserException();
+            }
             addTask(command, userList);
             User currentUser = userList.getActiveUser();
             currentUser.getStorage().writeTaskInFile(currentUser);
@@ -95,9 +100,12 @@ public class Parser {
             int index = Integer.parseInt(wordList.get(wordList.indexOf("/index") + 1));
             String newType = wordList.get(wordList.indexOf("/type") + 1);
             InputValidator.validateDay(day);
-            userList.getActiveUser().getTimetable().changeTaskType(day, index - 1, newType);
+
+            User currentUser = userList.getActiveUser();
+            currentUser.getTimetable().changeTaskType(day, index - 1, newType);
             System.out.println("Task type changed successfully.");
-        } catch (InvalidDayException | IndexOutOfBoundsException | NumberFormatException e) {
+            currentUser.getStorage().writeTaskInFile(currentUser);
+        } catch (InvalidDayException | IndexOutOfBoundsException | NumberFormatException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -107,11 +115,15 @@ public class Parser {
             InputValidator.validateDeleteTaskInput(command);
             String[] parts = command.split("\\s+");
             String day = parts[2];
-            int index = Integer.parseInt(parts[4]);
+            int index = Integer.parseInt(parts[4]) - 1;
             InputValidator.validateDay(day);
-            userList.getActiveUser().getTimetable().deleteUserTask(day, index);
+            User currentUser = userList.getActiveUser();
+            currentUser.getTimetable().deleteUserTask(day, index);
+            currentUser.getStorage().writeTaskInFile(currentUser);
         } catch (InvalidFormatException | InvalidDayException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
         }
     }
 
@@ -154,10 +166,13 @@ public class Parser {
             LocalTime newStartTime = LocalTime.parse(parts[wordList.indexOf("/from") + 1]);
             LocalTime newEndTime = LocalTime.parse(parts[wordList.indexOf("/to") + 1]);
             InputValidator.validateDay(day);
-            userList.getActiveUser().getTimetable().changeFlexibleTaskTiming(day,
+
+            User currentUser = userList.getActiveUser();
+            currentUser.getTimetable().changeFlexibleTaskTiming(day,
                     index - 1, newStartTime, newEndTime);
+            currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Flexible task timing changed successfully.");
-        } catch (InvalidDayException e) {
+        } catch (InvalidDayException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -181,13 +196,17 @@ public class Parser {
             String startTime = parts[wordlist.indexOf("/from") + 1];
             String endTime = parts[wordlist.indexOf("/to") + 1];
             String type = parts[wordlist.indexOf("/type") + 1];
+            User currentUser = userList.getActiveUser();
             for (String day : days) {
                 Task task = new Task(description, day, startTime, endTime, type);
-                userList.getActiveUser().getTimetable().addUserTask(day, task);
+                currentUser.getTimetable().addUserTask(day, task);
             }
+            currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Repeated task added successfully!");
         } catch (InvalidFormatException e) {
             System.out.println("Please enter at least 2 days, or you want to use addtask command!");
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
         }
     }
 
@@ -205,12 +224,13 @@ public class Parser {
     }
 
     private static void addTaskForAll(String command, UserList userList)
-            throws InvalidFormatException, InvalidDayException {
+            throws InvalidFormatException, InvalidDayException, IOException {
         InputValidator.validateAddTaskForAll(command);
         Task task = parseTask(command);
         assert !userList.getUsers().isEmpty() : "There is no user added.";
         for (User user : userList.getUsers()) {
             user.getTimetable().addUserTask(task.day, task);
+            user.getStorage().writeTaskInFile(user);
         }
         UI.printAddForAll(task);
     }

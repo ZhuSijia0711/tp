@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import seedu.duke.exceptions.InvalidDayException;
 import seedu.duke.exceptions.InvalidFormatException;
 import seedu.duke.exceptions.InvalidUserException;
+import seedu.duke.exceptions.NoUserException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +20,7 @@ class ParserTest {
     }
 
     @Test
-    public void adduserCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException {
+    public void adduserCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException, NoUserException, IOException {
         Parser.parseCommand("addUser User1", userlist);
 
         assertEquals(1, userlist.getListLength());
@@ -43,7 +45,7 @@ class ParserTest {
     }
 
     @Test
-    public void switchCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException {
+    public void switchCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException, NoUserException, IOException {
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
@@ -82,7 +84,7 @@ class ParserTest {
     }
 
     @Test
-    public void addTaskCommandTest() throws InvalidDayException, InvalidUserException, InvalidFormatException {
+    public void addTaskCommandTest() throws InvalidDayException, InvalidUserException, InvalidFormatException, NoUserException, IOException {
         User user1 = new User("User1");
         userlist.addUser(user1);
 
@@ -145,7 +147,7 @@ class ParserTest {
     }
 
     @Test
-    public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException {
+    public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException, NoUserException, IOException {
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
