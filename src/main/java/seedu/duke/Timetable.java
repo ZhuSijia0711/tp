@@ -2,12 +2,13 @@ package seedu.duke;
 
 import seedu.duke.ui.UI;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.format.TextStyle;
+import java.util.*;
+
+import static seedu.duke.ui.UI.printTasksOfTheDay;
 
 /**
  * This class represents the Timetable object consisting of Arraylist of Tasks for each day of the week.
@@ -76,7 +77,7 @@ public class Timetable {
             weeklyTasks.get(capitalizedDay).remove(index);
             System.out.println("Task " + taskDeleted.description + " is deleted from " + dayOfWeek);
             System.out.println("New task list for " + capitalizedDay + ":");
-            UI.printTasksOfTheDay(dayOfWeek, getWeeklyTasks());
+            printTasksOfTheDay(dayOfWeek, getWeeklyTasks());
         } else {
             System.out.println("Invalid task index. Please try again.");
         }
@@ -193,6 +194,39 @@ public class Timetable {
         tasksOfDay.add(task);
         return true;
     }
-
+    /**
+     * Get tasks for today.
+     *
+     * @return An ArrayList of tasks for today.
+     */
+    public ArrayList<Task> getTasksForToday() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String day = null;
+        switch (dayOfWeek) {
+        case Calendar.MONDAY:
+            day = "Monday";
+            break;
+        case Calendar.TUESDAY:
+            day = "Tuesday";
+            break;
+        case Calendar.WEDNESDAY:
+            day = "Wednesday";
+            break;
+        case Calendar.THURSDAY:
+            day = "Thursday";
+            break;
+        case Calendar.FRIDAY:
+            day = "Friday";
+            break;
+        case Calendar.SATURDAY:
+            day = "Saturday";
+            break;
+        case Calendar.SUNDAY:
+            day = "Sunday";
+            break;
+        }
+        return weeklyTasks.get(day);
+    }
 
 }
