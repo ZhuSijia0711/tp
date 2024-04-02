@@ -7,9 +7,7 @@ import seedu.duke.exceptions.InvalidUserException;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParserTest {
     UserList userlist = new UserList();
@@ -146,14 +144,21 @@ class ParserTest {
         }
     }
 
+    @Test
     public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException {
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
         userlist.addUser(user2);
 
-        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 25:00 /type f", userlist);
+        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 11:00 /type f", userlist);
 
+        Task addedTaskUser1 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
+        Task addedTaskUser2 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
 
+        assertEquals("lecture", addedTaskUser1.getDescription());
+        assertEquals("lecture", addedTaskUser2.getDescription());
+        assertEquals("09:00", addedTaskUser2.getStartTime().toString());
+        assertEquals("11:00", addedTaskUser2.getEndTime().toString());
     }
 }

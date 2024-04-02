@@ -15,7 +15,7 @@ import java.util.List;
 public class Parser {
 
     protected static final String[] DAYS = new String[]
-            {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     /**
      * Parses User Input and Identifies the command used.
@@ -31,7 +31,7 @@ public class Parser {
             UI.printHelp();
         } else if (command.equalsIgnoreCase("bye")) {
             UI.printBye();
-            Duke.setIsFinished(true);
+            Main.setIsFinished(true);
         } else if (command.equalsIgnoreCase("current")) {
             UI.printActiveUser(userList.getActiveUser().getName());
         } else if (command.equalsIgnoreCase("view")) {
@@ -238,23 +238,21 @@ public class Parser {
 
         if (numOfTasks == 0) {
             UI.printNoTasks();
-        } else {
-            Task nextTask = null;
-            for (int i = numOfTasks - 1; i >= 0; i -= 1) {
-                if (current.getStartTime().isBefore(tasksOfDay.get(i).getStartTime())) {
-                    nextTask = tasksOfDay.get(i);
+            return;
+        }
+        Task nextTask = null;
+        for (int i = numOfTasks - 1; i >= 0; i -= 1) {
+            if (current.getStartTime().isBefore(tasksOfDay.get(i).getStartTime())) {
+                nextTask = tasksOfDay.get(i);
+            } else {
+                if (nextTask == null) {
+                    UI.printNoTasks();
                 } else {
                     UI.printNext();
-                    if (nextTask == null) {
-                        UI.printNoTasks();
-                    } else {
-                        System.out.println(nextTask.toString());
-                    }
-                    return;
+                    System.out.println(nextTask.toString());
                 }
+                return;
             }
         }
-
-
     }
 }
