@@ -1,0 +1,21 @@
+@startuml
+autonumber
+
+Main -> Parser: (parseCommand("next", userList))
+DayOfWeek -> Parser: dayOfWeek
+Parser -> Parser: capitalizeDay(dayOfWeek)
+
+Parser -> Timetable: getWeeklyTasks(dayOfWeek)
+Timetable -> Parser: tasksOfDay
+Parser -> Parser: tasksOfDay.size()
+
+alt numOfTasks == 0
+    Parser -> UI: printNoTasks()
+else
+    loop numOfTasks
+        alt currentTime < task.startTime
+            Parser -> UI: nextTask()
+        end
+    end
+end
+@enduml
