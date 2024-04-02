@@ -25,11 +25,16 @@ Example: `adduser /MIKE`
 
 ### adding a task: `addtask'
 
-Format: `addtask /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+Format: `addtask /on DAY /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+* Both starting time and end time must be in the format of HH:MM.
+* Task_type is either `f` (for flexible tasks) or `c` (for compulsory tasks).
 
+Example: `addtask /on monday /task lecture /from 11:00 /to 12:00 /type f`
 ### adding a task with duplication check: `addtwdc'
 
 Format: `addtwdc /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+
+Example: `addtwdc /on monday /task lecture /from 11:00 /to 12:00 /type f`
 
 ### showing current user: `current`
 
@@ -39,21 +44,23 @@ Format:`current`
 
 Format: `switch USER_NAME`
 
+Example: `switch max`
+
 ### delete task from one user's timetable: `deletetask`
 
-Format: `deletetask /on DATE /index TASK_INDEX`
+Format: `deletetask /on DAY /index TASK_INDEX`
+
+Example: `deletetask /on monday /index 1`
 
 ### change the start time or end time of a task: `changetasktiming`
 
-Format:`changetasktiming /on DATE /index TASK_INDEX /from TIME /to TIME`
+Format:`changetasktiming /on DAY /index TASK_INDEX /from TIME /to TIME`
+
+Example: `changetasktiming /on monday /index 1 /from 12:00 /to 13:00`
 
 ### change the task type: `changetasktype`
 
-Format:`changetasktype /on DATE /index TASK_INDEX /type F_OR_C`
-
-### add task which happens on multiple days into the timetable: `addrepeaettask`
-
-Format:` addrepeattask /task TASK_NAME /on DATES /from START_TIME /to END_TIME /type F_OR_C`
+Format:`changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 
 ### view today's tasks: `todaytask`
 
@@ -62,22 +69,21 @@ Format: `todaytask`
 ### Adding a todo: `todo`
 Adds a new item to the list of todo items.
 
-Format: `todo n/TODO_NAME d/DEADLINE`
+Example: `changetasktype /on monday /index 1 /type c`
 
-* The `DEADLINE` can be in a natural language format.
-* The `TODO_NAME` cannot contain punctuation.  
+### add task which happens on multiple days into the timetable: `addrepeaettask`
 
-Example of usage: 
+Format:` addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
 
-`todo n/Write the rest of the User Guide d/next week`
+Example: `addrepeattask /task lecture /on monday tuesday /from 9:00 /to 11:00 /type c`
 
-`todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
 
 ## FAQ
 
-**Q**: How do I transfer my data to another computer? 
+**Q**: Where are the timetables stored?
 
-**A**: {your answer here}
+**A**: The timetables are stored in the folder named "data" in the same directory. 
+The name of the file indicates the owner of the timetable.
 
 ## Command Summary
 
