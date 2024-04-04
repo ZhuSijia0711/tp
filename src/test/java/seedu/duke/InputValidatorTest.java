@@ -2,7 +2,7 @@ package seedu.duke;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
+import seedu.duke.exceptions.InvalidFormatException;
 class InputValidatorTest {
     @Test
     public void testValidChangeTaskTimingFormat() {

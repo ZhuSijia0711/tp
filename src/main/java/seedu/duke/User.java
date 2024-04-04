@@ -6,12 +6,17 @@ public class User {
     private Timetable timetable;
     private final String name;
 
+    private static String folderPath = "data";
     private Storage storage;
 
     public User(String name) {
         this.name = name;
         this.timetable = new Timetable();
-        this.storage = new Storage("data/" + name + ".txt");
+        this.storage = new Storage(folderPath + "/" + name + ".txt");
+    }
+
+    public static void setFolderPath(String newPath) {
+        User.folderPath = newPath;
     }
 
     public Storage getStorage() {

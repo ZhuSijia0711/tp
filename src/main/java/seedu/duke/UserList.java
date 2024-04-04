@@ -55,4 +55,13 @@ public class UserList {
         }
         return null;
     }
+
+    public boolean containsUser(String userName) {
+        for (User user : allUsers) {
+            if (userName.equalsIgnoreCase(user.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

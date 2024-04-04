@@ -15,7 +15,7 @@ class TimetableTest {
 
         timetable.addUserTask("Tuesday", task);
 
-        timetable.printTasksOfTheDay("Tuesday");
+        //timetable.printTasksOfTheDay("Tuesday");
         assertEquals(1, timetable.getWeeklyTasks().get("Tuesday").size());
         assertEquals(task, timetable.getWeeklyTasks().get("Tuesday").get(0));
     }
