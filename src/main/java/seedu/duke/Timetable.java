@@ -2,10 +2,8 @@ package seedu.duke;
 
 import seedu.duke.ui.UI;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.*;
 
 import static seedu.duke.ui.UI.printTasksOfTheDay;
@@ -32,7 +30,6 @@ public class Timetable {
 
     /**
      * Adds task on dayOfWeek at an index
-     *
      * @param dayOfWeek first Timetable.
      * @param task      task to add.
      */
@@ -43,7 +40,6 @@ public class Timetable {
 
     /**
      * Adds a task to the timetable with duplication check.
-     *
      * @param dayOfWeek The day of the week.
      * @param task      The task to add.
      * @return True if the task was added successfully, false if a duplicate was found.
@@ -63,12 +59,11 @@ public class Timetable {
     }
 
 
-        /**
-         * Deletes task on dayOfWeek at an index
-         *
-         * @param dayOfWeek first Timetable.
-         * @param index     index of task within task list
-         */
+    /**
+     * Deletes task on dayOfWeek at an index
+     * @param dayOfWeek first Timetable.
+     * @param index     index of task within task list
+     */
     public void deleteUserTask(String dayOfWeek, int index) {
         String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
         //check if index is a valid number within a day's tasklist
@@ -195,8 +190,6 @@ public class Timetable {
                 return false;
             }
         }
-
-        // No duplicate found, add the task
         tasksOfDay.add(task);
         return true;
     }
@@ -231,8 +224,8 @@ public class Timetable {
         case Calendar.SUNDAY:
             day = "Sunday";
             break;
+        default: break;
         }
         return weeklyTasks.get(day);
     }
-
 }

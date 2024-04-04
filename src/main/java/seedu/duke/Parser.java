@@ -79,8 +79,7 @@ public class Parser {
             changeTaskType(command, userList);
         } else if(command.toLowerCase().startsWith("todaytask")){
             todaytask(userList);
-        }
-        else if (command.toLowerCase().startsWith("compareall")) {
+        } else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
@@ -139,7 +138,6 @@ public class Parser {
 
     /**
      * Adds a task to the timetable with task duplication detection.
-     *
      * @param command  The user input command.
      * @param userList The list of users.
      */
