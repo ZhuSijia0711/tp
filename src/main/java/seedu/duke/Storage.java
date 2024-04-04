@@ -22,7 +22,7 @@ public class Storage {
     public static final int DESCRIPTION_INDEX = 18;
     public static final int TYPE_INDEX_INCREMENT = 7;
     public String filePath;
-    public static final String folderPath = "data";
+    public static String folderPath = "data";
 
     private static final String boxOutline = "+---------+\n";
 
@@ -31,6 +31,10 @@ public class Storage {
     private static final String lineSeparator =
             ".................................................................................................\n";
 
+
+    public static void setFolderPath(String newPath) {
+        folderPath = newPath;
+    }
     public Storage(String filePath) {
         this.filePath = filePath;
     }
