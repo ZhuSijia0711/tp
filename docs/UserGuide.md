@@ -6,6 +6,25 @@ Welcome to **TimeTableComparer**! This application is meant for creating and sto
 
 ## Table of Contents
 - [Quick Start](#quick-start)
+- [Features](#features)
+    - [Adding a user: `adduser`](#adduser)
+    - [Show current user: `current`](#current)
+    - [Listing all users: `list`](#list)
+    - [Switch users: `switch`](#switch)
+    - [Adding a task: `task`](#addtask)
+    - [Adding a task (duplication check): `addtwdc`](#addtwdc)
+    - [Deleting a task: `deletetask`](#deletetask)
+    - [Comparing two timetables: `compare`](#compare)
+    - [Comparing all timetables: `compareall`](#compareall)
+    - [Add a task for all users: `addforall`](#addforall)
+    - [Changing a task's times: `changetasktiming`](#changetasktiming)
+    - [Changing a task's type: `changetasktype`](#changetasktype)
+    - [View today's tasks: `todaytask`](#todaytask)
+    - [Add a recurring task: `addrepeattask`](#addrepeattask)
+    - [Help: `help`](#help)
+    - [Exit program: `bye`](#bye)
+- [FAQ](#faq)
+- [Command Summary](#commandsummary)
 
 ## Quick Start <a name="quick-start"></a>
 Downloading TimeTableComparer
@@ -16,10 +35,10 @@ Downloading TimeTableComparer
 4. Open your terminal or gitBash and `cd` into the folder you placed the .jar file.
 5. Run `java -jar tP.jar`
 
-## Features 
+## Features <a name="features"></a>
 > Note: `CAPITAL_LETTERS` Indicate the section for user's input.
 
-## Adding a user: `adduser`
+## Adding a user: `adduser` <a name="adduser"></a>
 
 Add a new user into the user list.
 
@@ -35,7 +54,7 @@ File created: mike.txt
 ```
 > *If this is the first user created then the active user will be set to the new user*
 
-## Show current user: `current`
+## Show current user: `current` <a name="current"></a>
 
 Displays the active user.
 
@@ -53,7 +72,7 @@ Expected Output:
 The active user is: john
 ```
 
-## Listing all existing users: `list`
+## Listing all existing users: `list` <a name="list"></a>
 
 View the list of existing user names.
 
@@ -69,7 +88,7 @@ john
 jill
 ```
 
-## Switch to another user: `switch`
+## Switch to another user: `switch` <a name="switch"></a>
 
 Switch the active user to the inputted name.
 
@@ -82,7 +101,7 @@ Expected Output:
 The active user is: jane
 ```
 
-## Adding a task: `addtask`
+## Adding a task: `addtask` <a name="addtask"></a>
 
 Add a new task into the active user's list.
 
@@ -98,7 +117,7 @@ The following task is added: lecture (monday from 11:00 to 12:00) type: f
 Timetable has been written to data/mike.txt
 ```
 
-## Adding a task with duplication check: `addtwdc`
+## Adding a task with duplication check: `addtwdc` <a name="addtwdc"></a>
 
 Adding a new task with a duplication check, ensuring that task of this type does not get duplicated.
 
@@ -114,7 +133,7 @@ Invalid command.
 Task already exists. Cannot add duplicate task.
 ```
 
-## Delete task from one user's timetable: `deletetask`
+## Delete task from one user's timetable: `deletetask` <a name="deletetask"></a>
 
 Delete a task given a specific day and task number.
 
@@ -131,7 +150,7 @@ Timetable has been written to data/jane.txt
 ```
 > This output is given that we deleted the only task on monday.
 
-## Compare two timetables: `compare`
+## Compare two timetables: `compare` <a name="compare"></a>
 
 Compare timetables between two specified users.
 
@@ -168,7 +187,7 @@ Shared free time on Sunday:
     ** Whole day is free on Sunday
 ```
 
-## Compare all timetables: `compareall`
+## Compare all timetables: `compareall` <a name="compareall"></a>
 
 Compare timetables between all existing users.
 
@@ -208,7 +227,7 @@ Shared free time on Sunday:
 
 ```
 
-## Add a task for all existing users: `addforall`
+## Add a task for all existing users: `addforall` <a name="addforall"></a>
 
 Add a task for all existing users.
 
@@ -224,7 +243,7 @@ Timetable has been written to data/jill.txt
 The following task is added for all users: laundry (sunday from 07:00 to 09:00) type: f
 ```
 
-## Change the start time or end time of a task: `changetasktiming`
+## Change the start time or end time of a task: `changetasktiming` <a name="changetasktiming"></a>
 
 Change the starting/ending time of a task given a day and task number.
 
@@ -238,7 +257,7 @@ Flexible task timing changed successfully.
 Timetable has been written to data/jane.txt
 ```
 
-## Change the task type: `changetasktype`
+## Change the task type: `changetasktype` <a name="changetasktype"></a>
 
 Format:`changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 
@@ -250,7 +269,7 @@ Task type changed successfully.
 Timetable has been written to data/jane.txt
 ```
 
-## View today's tasks: `todaytask`
+## View today's tasks: `todaytask` <a name="todaytask"></a>
 
 Format: `todaytask`
 
@@ -264,7 +283,7 @@ Today :
 ```
 >Given that tasks exist the day this command is ran.
 
-## Add a task which occurs on multiple days: `addrepeaettask`
+## Add a task which occurs on multiple days: `addrepeaettask` <a name="addrepeattask"></a>
 
 Add a task which occurs on multiple days given a set of days.
 
@@ -277,13 +296,13 @@ Expected Output:
 Timetable has been written to data/user.txt
 Repeated task added successfully!
 ```
-## List name of commands: `help`
+## List name of commands: `help` <a name="help"></a>
 
 Format: `help`
 
 Example: `help`
 
-## Exit the program: `bye`
+## Exit the program: `bye` <a name="bye"></a>
 
 Format: `bye`
 
@@ -291,14 +310,14 @@ Example: `bye`
 
 Expected Output: `Bye.`
 
-## FAQ
+## FAQ <a name="faq"></a>
 
 **Q**: Where are the timetables stored?
 
 **A**: The timetables are stored in the folder named "data" in the same directory. 
 The name of the file indicates the owner of the timetable.
 
-## Command Summary
+## Command Summary <a name="commandsummary"></a>
 
 {Give a 'cheat sheet' of commands here}
 
