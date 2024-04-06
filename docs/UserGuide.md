@@ -49,7 +49,7 @@ Example: `adduser mike`
 Expected Output: 
 ```
 New user added: mike
-The active user is: mike\n
+The active user is: mike
 File created: mike.txt
 ```
 > *If this is the first user created then the active user will be set to the new user*
@@ -283,11 +283,11 @@ Today :
 ```
 >Given that tasks exist the day this command is ran.
 
-## Add a task which occurs on multiple days: `addrepeaettask` <a name="addrepeattask"></a>
+## Add a task which occurs on multiple days: `addrepeattask` <a name="addrepeattask"></a>
 
 Add a task which occurs on multiple days given a set of days.
 
-Format:` addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+Format: `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
 
 Example: `addrepeattask /task lecture /on monday tuesday /from 9:00 /to 11:00 /type c`
 
@@ -319,6 +319,19 @@ The name of the file indicates the owner of the timetable.
 
 ## Command Summary <a name="commandsummary"></a>
 
-{Give a 'cheat sheet' of commands here}
-
-* Add todo `todo n/TODO_NAME d/DEADLINE`
+- Add User `adduser NAME`
+- Show Active User `current`
+- List All Users `list`
+- Switch Users `switch`
+- Adding a Task `addtask /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Adding a Task (Duplication Check) `addtwdc /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Delete a Task `deletetask /on DAY /index TASK_NUMBER`
+- Compare Two Timetables `compare NAME_1 NAME_2`
+- Compare All Timetables `compareall`
+- Add a Task For All Users `addforall /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Changing a Task's Time `changetasktiming /on DAY /index TASK_INDEX /from TIME /to TIME`
+- Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
+- List Today's Tasks `todaytask`
+- Add a Recurring task `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+- Help `help`
+- Exit Program `bye`
