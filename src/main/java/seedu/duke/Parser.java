@@ -92,6 +92,7 @@ public class Parser {
             UI.printSharedTime(Timetable.compareTimetable(userList.findUser(user1).getTimetable(),
                     userList.findUser(user2).getTimetable()));
         } else if (command.toLowerCase().startsWith("addforall")) {
+            InputValidator.validateAddTaskForAll(command);
             addTaskForAll(command, userList);
         } else if (command.toLowerCase().startsWith("viewcommonevents")) {
             printConfirmedEvent(userList);
@@ -201,14 +202,21 @@ public class Parser {
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
+        String type = parts[wordList.indexOf("/type") + 1];
+        InputValidator.validateDay(day);
+        return new Task(description, day, startTime, endTime, type);
+    }
 
-        String type;
-        if (wordList.contains("/type")) {
-            type = parts[wordList.indexOf("/type") + 1];
-        } else {
-            type = "common";
-        }
+    public static Task parseAddForAllTask(String command) throws InvalidDayException {
+        String[] parts = command.split("\\s+");
+        List<String> wordList = Arrays.asList(parts);
+        String dayBase = parts[2].toLowerCase();
+        String day = dayBase.substring(0, 1).toUpperCase() + dayBase.substring(1);
+        String description = parseDescription(wordList);
+        String startTime = parts[wordList.indexOf("/from") + 1];
+        String endTime = parts[wordList.indexOf("/to") + 1];
 
+        String type = "common";
         InputValidator.validateDay(day);
         return new Task(description, day, startTime, endTime, type);
     }
@@ -310,9 +318,9 @@ public class Parser {
 
 
     private static void addTaskForAll(String command, UserList userList)
-            throws InvalidFormatException, InvalidDayException, IOException {
-        InputValidator.validateAddTaskForAll(command);
-        Task task = parseTask(command);
+            throws InvalidDayException, IOException {
+        //InputValidator.validateAddTaskForAll(command);
+        Task task = parseAddForAllTask(command);
         assert !userList.getUsers().isEmpty() : "There is no user added.";
         for (User user : userList.getUsers()) {
             user.getTimetable().addUserTask(task.day, task);
@@ -328,8 +336,12 @@ public class Parser {
             for (Task task : userList.getActiveUser().getTimetable().getWeeklyTasks().get(day)) {
                 if (task.type.equals("common")) {
                     System.out.println(taskCount + ". " + task);
+                    taskCount++;
                 }
             }
+        }
+        if (taskCount == 1) {
+            System.out.println("There is no common events.");
         }
     }
 
