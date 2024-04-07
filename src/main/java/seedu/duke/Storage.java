@@ -30,12 +30,20 @@ public class Storage {
             ".................................................................................................\n";
     public String filePath;
 
-    public Storage(String filePath) {
-        this.filePath = filePath;
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public static String getFolderPath() {
+        return folderPath;
     }
 
     public static void setFolderPath(String newPath) {
         folderPath = newPath;
+    }
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
     public static void createFolder() {

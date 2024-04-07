@@ -174,8 +174,7 @@ public class InputValidator {
 
         if (!input.matches(regex)) {
             throw new InvalidFormatException("[ERROR] Invalid addtask format. " +
-                    "Expected format: addforall /on [day] /task [description] /from [start time] /to [end time] " +
-                    "/type [f/c]");
+                    "Expected format: addforall /on [day] /task [description] /from [start time] /to [end time] ");
         }
     }
 
