@@ -231,16 +231,17 @@ Shared free time on Sunday:
 
 Add a task for all existing users.
 
-Format: `addforall /on DAY /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+Format: `addforall /on DAY /task TASK_NAME /from TIME /to TIME`
 
-Example: `addforall /on sunday /task laundry /from 7:00 /to 9:00 /type f`
+Example: `addforall /on sunday /task laundry /from 7:00 /to 9:00`
+* Note: there is no need to specify type for common events as tasks added for all users are assumed to be of type "common",
 
 Expected Output:
 ```
 Timetable has been written to data/jane.txt
 Timetable has been written to data/john.txt
 Timetable has been written to data/jill.txt
-The following task is added for all users: laundry (sunday from 07:00 to 09:00) type: f
+The following task is added for all users: laundry (sunday from 07:00 to 09:00)
 ```
 
 ## Change the start time or end time of a task: `changetasktiming` <a name="changetasktiming"></a>

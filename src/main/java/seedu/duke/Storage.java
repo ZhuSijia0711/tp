@@ -23,10 +23,10 @@ public class Storage {
     public static final int TYPE_INDEX_INCREMENT = 7;
 
     public static String folderPath = "data";
-    private static final String boxOutline = "+---------+\n";
-    private static final String boxOutlineForWednesday = "+-------------+\n";
-    private static final String boxOutlineForFriday = "+------+\n";
-    private static final String lineSeparator =
+    public static final String boxOutline = "+---------+\n";
+    public static final String boxOutlineForWednesday = "+-------------+\n";
+    public static final String boxOutlineForFriday = "+------+\n";
+    public static final String lineSeparator =
             ".................................................................................................\n";
     public String filePath;
 

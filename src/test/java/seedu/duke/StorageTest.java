@@ -3,7 +3,6 @@ package seedu.duke;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -130,7 +129,7 @@ public class StorageTest {
             if (day.equals("Monday")) {
                 writeToFile(filePath, "1. 01:00 - 02:00: lecture (type: c)", true);
             } else if (day.equals("Thursday")) {
-                
+                writeToFile(filePath, "2. 02:00 - 03:00: lecture (type: f)", true);
             }
             writeToFile(filePath, lineSeparator, true);
             writeToFile(filePath, "\n", true);
