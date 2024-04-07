@@ -1,85 +1,337 @@
 # User Guide
 
-## Introduction
+### Introduction
 
-{Give a product intro}
+Welcome to **TimeTableComparer**! This application is meant for creating and storing task within a weekly calendar and seeing shared time between user's timetables. A convient way to determine shared free time!
 
-## Quick Start
+## Table of Contents
+- [Quick Start](#quick-start)
+- [Features](#features)
+    - [Adding a user: `adduser`](#adduser)
+    - [Show current user: `current`](#current)
+    - [Listing all users: `list`](#list)
+    - [Switch users: `switch`](#switch)
+    - [Adding a task: `task`](#addtask)
+    - [Adding a task (duplication check): `addtwdc`](#addtwdc)
+    - [Deleting a task: `deletetask`](#deletetask)
+    - [Comparing two timetables: `compare`](#compare)
+    - [Comparing all timetables: `compareall`](#compareall)
+    - [Add a task for all users: `addforall`](#addforall)
+    - [Changing a task's times: `changetasktiming`](#changetasktiming)
+    - [Changing a task's type: `changetasktype`](#changetasktype)
+    - [View today's tasks: `todaytask`](#todaytask)
+    - [Add a recurring task: `addrepeattask`](#addrepeattask)
+    - [Help: `help`](#help)
+    - [Exit program: `bye`](#bye)
+- [FAQ](#faq)
+- [Command Summary](#commandsummary)
 
-{Give steps to get started quickly}
+## Quick Start <a name="quick-start"></a>
+Downloading TimeTableComparer
 
-1. Ensure that you have Java 11 or above installed.
-2. Down the latest version of `Duke` from [here](http://link.to/duke).
+1. Ensure that you have [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or above installed.
+2. Down the latest version of `tP.jar` from [here](http://link.to/duke).
+3. Copy the file to the folder you want to use as the home folder for the application. For example,`C:\Users\setupuser\Documents\StockPal\stockpal.jar`.
+4. Open your terminal or gitBash and `cd` into the folder you placed the .jar file.
+5. Run `java -jar tP.jar`
 
-## Features 
+## Features <a name="features"></a>
+> Note: `CAPITAL_LETTERS` Indicate the section for user's input.
 
-{Give detailed description of each feature}
+## Adding a user: `adduser` <a name="adduser"></a>
 
-### Adding a user: `adduser`
+Add a new user into the user list.
 
-add a new user into the user list.
+Format: `adduser NAME`
 
-Format: `adduser /NAME`
+Example: `adduser mike`
 
-Example: `adduser /MIKE`
+Expected Output: 
+```
+New user added: mike
+The active user is: mike
+File created: mike.txt
+```
+> *If this is the first user created then the active user will be set to the new user*
 
-### adding a task: `addtask'
+## Show current user: `current` <a name="current"></a>
 
-Format: `addtask /on DAY /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
-* Both starting time and end time must be in the format of HH:MM.
-* Task_type is either `f` (for flexible tasks) or `c` (for compulsory tasks).
-
-Example: `addtask /on monday /task lecture /from 11:00 /to 12:00 /type f`
-### adding a task with duplication check: `addtwdc'
-
-Format: `addtwdc /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
-
-Example: `addtwdc /on monday /task lecture /from 11:00 /to 12:00 /type f`
-
-### showing current user: `current`
+Displays the active user.
 
 Format:`current`
 
-### switch to another user:`switch`
+Example: `current`
+```
+adduser john
+adduser jill
+adduser jack
+current
+```
+Expected Output:
+```
+The active user is: john
+```
+
+## Listing all existing users: `list` <a name="list"></a>
+
+View the list of existing user names.
+
+Format: `list`
+
+Example: `list`
+
+Expected Output: 
+```
+The current users are: 
+jane
+john
+jill
+```
+
+## Switch to another user: `switch` <a name="switch"></a>
+
+Switch the active user to the inputted name.
 
 Format: `switch USER_NAME`
 
-Example: `switch max`
+Example: `switch jane`
 
-### delete task from one user's timetable: `deletetask`
+Expected Output:
+```
+The active user is: jane
+```
+
+## Adding a task: `addtask` <a name="addtask"></a>
+
+Add a new task into the active user's list.
+
+Format: `addtask /on DAY /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+> * Both starting time and end time must be in the format of HH:MM or H:MM.
+> * TASK_TYPE is either `f` (for flexible tasks) or `c` (for compulsory tasks).
+
+Example: `addtask /on monday /task lecture /from 11:00 /to 12:00 /type f`
+
+Expected Output: 
+```
+The following task is added: lecture (monday from 11:00 to 12:00) type: f
+Timetable has been written to data/mike.txt
+```
+
+## Adding a task with duplication check: `addtwdc` <a name="addtwdc"></a>
+
+Adding a new task with a duplication check, ensuring that task of this type does not get duplicated.
+
+Format: `addtwdc /on DATE /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+>* Both starting time and end time must be in the format of HH:MM or H:MM.
+>* TASK_TYPE is either `f` (for flexible tasks) or `c` (for compulsory tasks).
+
+Example: `addtwdc /on monday /task lecture /from 11:00 /to 12:00 /type f`
+
+Expected Output (Duplicate Found):
+```
+Invalid command. 
+Task already exists. Cannot add duplicate task.
+```
+
+## Delete task from one user's timetable: `deletetask` <a name="deletetask"></a>
+
+Delete a task given a specific day and task number.
 
 Format: `deletetask /on DAY /index TASK_INDEX`
 
 Example: `deletetask /on monday /index 1`
 
-### change the start time or end time of a task: `changetasktiming`
+Expected Output:
+```
+Task lecture is deleted from monday
+New task list for Monday:
+No task for monday!
+Timetable has been written to data/jane.txt
+```
+> This output is given that we deleted the only task on monday.
+
+## Compare two timetables: `compare` <a name="compare"></a>
+
+Compare timetables between two specified users.
+
+Format: `compare NAME_1 NAME_2`
+
+Example: `compare john jane`
+
+Expected Output:
+```
+_________________________________________
+Shared free time on Monday:
+    00:00 - 09:00
+    11:00 - 12:00
+    13:00 - 23:59
+_________________________________________
+Shared free time on Tuesday:
+    00:00 - 09:00
+    11:00 - 23:59
+_________________________________________
+Shared free time on Wednesday:
+    ** Whole day is free on Wednesday
+_________________________________________
+Shared free time on Thursday:
+    ** Whole day is free on Thursday
+_________________________________________
+Shared free time on Friday:
+    00:00 - 13:00
+    14:00 - 23:59
+_________________________________________
+Shared free time on Saturday:
+    ** Whole day is free on Saturday
+_________________________________________
+Shared free time on Sunday:
+    ** Whole day is free on Sunday
+```
+
+## Compare all timetables: `compareall` <a name="compareall"></a>
+
+Compare timetables between all existing users.
+
+Format: `compareall`
+
+Example: `compareall`
+
+Expected Output:
+```
+Comparing all timetables: 
+_________________________________________
+Shared free time on Monday:
+    00:00 - 09:00
+    11:00 - 12:00
+    13:00 - 23:59
+_________________________________________
+Shared free time on Tuesday:
+    00:00 - 09:00
+    11:00 - 23:59
+_________________________________________
+Shared free time on Wednesday:
+    ** Whole day is free on Wednesday
+_________________________________________
+Shared free time on Thursday:
+    ** Whole day is free on Thursday
+_________________________________________
+Shared free time on Friday:
+    00:00 - 13:00
+    14:00 - 23:59
+_________________________________________
+Shared free time on Saturday:
+    00:00 - 02:00
+    04:00 - 23:59
+_________________________________________
+Shared free time on Sunday:
+    ** Whole day is free on Sunday
+
+```
+
+## Add a task for all existing users: `addforall` <a name="addforall"></a>
+
+Add a task for all existing users.
+
+Format: `addforall /on DAY /task TASK_NAME /from TIME /to TIME /type TASK_TYPE`
+
+Example: `addforall /on sunday /task laundry /from 7:00 /to 9:00 /type f`
+
+Expected Output:
+```
+Timetable has been written to data/jane.txt
+Timetable has been written to data/john.txt
+Timetable has been written to data/jill.txt
+The following task is added for all users: laundry (sunday from 07:00 to 09:00) type: f
+```
+
+## Change the start time or end time of a task: `changetasktiming` <a name="changetasktiming"></a>
+
+Change the starting/ending time of a task given a day and task number.
 
 Format:`changetasktiming /on DAY /index TASK_INDEX /from TIME /to TIME`
 
 Example: `changetasktiming /on monday /index 1 /from 12:00 /to 13:00`
 
-### change the task type: `changetasktype`
+Expected Output:
+```
+Flexible task timing changed successfully.
+Timetable has been written to data/jane.txt
+```
+
+## Change the task type: `changetasktype` <a name="changetasktype"></a>
 
 Format:`changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 
 Example: `changetasktype /on monday /index 1 /type c`
 
-### add task which happens on multiple days into the timetable: `addrepeaettask`
+Expected Output:
+```
+Task type changed successfully.
+Timetable has been written to data/jane.txt
+```
 
-Format:` addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+## View today's tasks: `todaytask` <a name="todaytask"></a>
+
+Format: `todaytask`
+
+Example: `todaytask`
+
+Expected Output:
+```
+_________________________________________
+Today :
+    1. walk dog (friday from 13:00 to 14:00) type: c
+```
+>Given that tasks exist the day this command is ran.
+
+## Add a task which occurs on multiple days: `addrepeattask` <a name="addrepeattask"></a>
+
+Add a task which occurs on multiple days given a set of days.
+
+Format: `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
 
 Example: `addrepeattask /task lecture /on monday tuesday /from 9:00 /to 11:00 /type c`
 
+Expected Output:
+```
+Timetable has been written to data/user.txt
+Repeated task added successfully!
+```
+## List name of commands: `help` <a name="help"></a>
 
-## FAQ
+Format: `help`
+
+Example: `help`
+
+## Exit the program: `bye` <a name="bye"></a>
+
+Format: `bye`
+
+Example: `bye`
+
+Expected Output: `Bye.`
+
+## FAQ <a name="faq"></a>
 
 **Q**: Where are the timetables stored?
 
 **A**: The timetables are stored in the folder named "data" in the same directory. 
 The name of the file indicates the owner of the timetable.
 
-## Command Summary
+## Command Summary <a name="commandsummary"></a>
 
-{Give a 'cheat sheet' of commands here}
-
-* Add todo `todo n/TODO_NAME d/DEADLINE`
+- Add User `adduser NAME`
+- Show Active User `current`
+- List All Users `list`
+- Switch Users `switch`
+- Adding a Task `addtask /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Adding a Task (Duplication Check) `addtwdc /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Delete a Task `deletetask /on DAY /index TASK_NUMBER`
+- Compare Two Timetables `compare NAME_1 NAME_2`
+- Compare All Timetables `compareall`
+- Add a Task For All Users `addforall /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Changing a Task's Time `changetasktiming /on DAY /index TASK_INDEX /from TIME /to TIME`
+- Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
+- List Today's Tasks `todaytask`
+- Add a Recurring task `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+- Help `help`
+- Exit Program `bye`

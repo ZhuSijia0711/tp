@@ -67,9 +67,9 @@ public class Parser {
             }
             addTask(command, userList);
             currentUser.getStorage().writeTaskInFile(currentUser);
-        } else if  (command.toLowerCase().startsWith("addtwdc")) {
+        } else if (command.toLowerCase().startsWith("addtwdc")) {
             addTaskWithDuplicationCheck(command, userList);
-        }else if (command.toLowerCase().startsWith("deletetask")) {
+        } else if (command.toLowerCase().startsWith("deletetask")) {
             deleteTask(command, userList);
         } else if (command.toLowerCase().startsWith("changetasktiming")) {
             changeTaskTiming(command, userList);
@@ -77,6 +77,8 @@ public class Parser {
             addRepeatTask(command, userList);
         } else if (command.toLowerCase().startsWith("changetasktype")) {
             changeTaskType(command, userList);
+        } else if (command.toLowerCase().startsWith("todaytask")) {
+            todaytask(userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
@@ -98,7 +100,6 @@ public class Parser {
         }
     }
 
-
     private static void changeTaskType(String command, UserList userList) throws InvalidFormatException {
         try {
             InputValidator.validateChangeTaskType(command);
@@ -113,8 +114,12 @@ public class Parser {
             currentUser.getTimetable().changeTaskType(day, index - 1, newType);
             System.out.println("Task type changed successfully.");
             currentUser.getStorage().writeTaskInFile(currentUser);
-        } catch (InvalidDayException | IndexOutOfBoundsException | NumberFormatException | IOException e) {
+        } catch (NumberFormatException | IOException e) {
             throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidFormatException("The selected task does not exist. ");
+        } catch (InvalidDayException e) {
+            throw new InvalidFormatException("[ERROR] Invalid day. Please enter a day from Monday - Sunday. ");
         }
     }
 
@@ -177,18 +182,22 @@ public class Parser {
         String capitalisedDay = day.substring(0, 1).toUpperCase() + day.substring(1);
         timetable.getWeeklyTasks().get(capitalisedDay).sort(Comparator.comparing(Task::getStartTime));
         for (Task task : timetable.getWeeklyTasks().get(capitalisedDay)) {
-            if (taskToBeAdded.startTime.isAfter(task.getStartTime()) && taskToBeAdded.startTime.isBefore(task.getEndTime())
-            || (taskToBeAdded.endTime.isAfter(task.getStartTime()) && taskToBeAdded.endTime.isBefore(task.getEndTime()))) {
+            if (taskToBeAdded.startTime.isAfter(task.getStartTime()) &&
+                    taskToBeAdded.startTime.isBefore(task.getEndTime())
+                    || (taskToBeAdded.endTime.isAfter(task.getStartTime()) &&
+                    taskToBeAdded.endTime.isBefore(task.getEndTime()))) {
                 return true;
             }
         }
         return false;
     }
 
-    public static Task parseTask(String command) throws InvalidDayException {
+    public static Task parseTask(String command) throws InvalidDayException, InvalidFormatException {
+        InputValidator.validateAddTaskInput(command);
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String day = parts[2];
+        String dayBase = parts[2].toLowerCase();
+        String day = dayBase.substring(0, 1).toUpperCase() + dayBase.substring(1);
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
@@ -204,7 +213,32 @@ public class Parser {
         return new Task(description, day, startTime, endTime, type);
     }
 
-    private static void changeTaskTiming(String command, UserList userList) throws InvalidFormatException {
+    /**
+     * Prints tasks for today.
+     *
+     * @param userList The list of users.
+     */
+    public static void todaytask(UserList userList) {
+        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString().toLowerCase();
+        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        ArrayList<Task> tasksForToday = userList.getActiveUser().getTimetable().getWeeklyTasks().get(capitalizedDay);
+
+        if (tasksForToday.isEmpty()) {
+            UI.printNoTask("today");
+            return;
+        }
+
+        System.out.println("_________________________________________");
+        UI.printDayHeader("Today");
+        int count = 1;
+        for (Task task : tasksForToday) {
+            UI.printTaskInList(count, task.toString());
+            count++;
+        }
+    }
+
+    private static void changeTaskTiming(String command, UserList userList) throws
+            InvalidFormatException, InvalidDayException {
         try {
             InputValidator.validateChangeTaskTiming(command);
             String[] parts = command.split("\\s+");
@@ -220,8 +254,10 @@ public class Parser {
                     index - 1, newStartTime, newEndTime);
             currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Flexible task timing changed successfully.");
-        } catch (InvalidDayException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (InvalidDayException e) {
+            throw new InvalidDayException("[ERROR] Invalid day. Please enter a day from Monday - Sunday.");
         }
     }
 
@@ -258,6 +294,7 @@ public class Parser {
         }
     }
 
+
     private static String parseDescription(List<String> words) {
         int startIndex = words.indexOf("/task") + 1;
         int endIndex = words.indexOf("/from") - 1;
@@ -270,6 +307,7 @@ public class Parser {
         }
         return description.toString();
     }
+
 
     private static void addTaskForAll(String command, UserList userList)
             throws InvalidFormatException, InvalidDayException, IOException {

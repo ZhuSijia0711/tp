@@ -5,9 +5,12 @@ import seedu.duke.ui.UI;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
+import static seedu.duke.ui.UI.printTasksOfTheDay;
 
 /**
  * This class represents the Timetable object consisting of Arraylist of Tasks for each day of the week.
@@ -31,7 +34,6 @@ public class Timetable {
 
     /**
      * Adds task on dayOfWeek at an index
-     *
      * @param dayOfWeek first Timetable.
      * @param task      task to add.
      */
@@ -42,7 +44,6 @@ public class Timetable {
 
     /**
      * Adds a task to the timetable with duplication check.
-     *
      * @param dayOfWeek The day of the week.
      * @param task      The task to add.
      * @return True if the task was added successfully, false if a duplicate was found.
@@ -62,12 +63,11 @@ public class Timetable {
     }
 
 
-        /**
-         * Deletes task on dayOfWeek at an index
-         *
-         * @param dayOfWeek first Timetable.
-         * @param index     index of task within task list
-         */
+    /**
+     * Deletes task on dayOfWeek at an index
+     * @param dayOfWeek first Timetable.
+     * @param index     index of task within task list
+     */
     public void deleteUserTask(String dayOfWeek, int index) {
         String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
         //check if index is a valid number within a day's tasklist
@@ -76,7 +76,7 @@ public class Timetable {
             weeklyTasks.get(capitalizedDay).remove(index);
             System.out.println("Task " + taskDeleted.description + " is deleted from " + dayOfWeek);
             System.out.println("New task list for " + capitalizedDay + ":");
-            UI.printTasksOfTheDay(dayOfWeek, getWeeklyTasks());
+            printTasksOfTheDay(dayOfWeek, getWeeklyTasks());
         } else {
             System.out.println("Invalid task index. Please try again.");
         }
@@ -194,11 +194,42 @@ public class Timetable {
                 return false;
             }
         }
-
-        // No duplicate found, add the task
         tasksOfDay.add(task);
         return true;
     }
-
-
+    /**
+     * Get tasks for today.
+     *
+     * @return An ArrayList of tasks for today.
+     */
+    public ArrayList<Task> getTasksForToday() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String day = null;
+        switch (dayOfWeek) {
+        case Calendar.MONDAY:
+            day = "Monday";
+            break;
+        case Calendar.TUESDAY:
+            day = "Tuesday";
+            break;
+        case Calendar.WEDNESDAY:
+            day = "Wednesday";
+            break;
+        case Calendar.THURSDAY:
+            day = "Thursday";
+            break;
+        case Calendar.FRIDAY:
+            day = "Friday";
+            break;
+        case Calendar.SATURDAY:
+            day = "Saturday";
+            break;
+        case Calendar.SUNDAY:
+            day = "Sunday";
+            break;
+        default: break;
+        }
+        return weeklyTasks.get(day);
+    }
 }

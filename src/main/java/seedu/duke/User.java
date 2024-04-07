@@ -3,10 +3,9 @@ package seedu.duke;
 import seedu.duke.ui.UI;
 
 public class User {
+    private static String folderPath = "data";
     private Timetable timetable;
     private final String name;
-
-    private static String folderPath = "data";
     private Storage storage;
 
     public User(String name) {

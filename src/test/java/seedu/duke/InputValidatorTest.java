@@ -2,6 +2,8 @@ package seedu.duke;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import seedu.duke.exceptions.InvalidDayException;
 import seedu.duke.exceptions.InvalidFormatException;
 class InputValidatorTest {
     @Test
@@ -21,8 +23,8 @@ class InputValidatorTest {
             InputValidator.validateChangeTaskTiming(invalidInput);
             fail("Expected InvalidFormatException");
         } catch (InvalidFormatException e) {
-            assertEquals("[ERROR] Invalid changeTaskTiming format. Expected format: " +
-                    "changeTaskTiming /on [day] /index [index] /from [new start time] /to [new end time]", e.getMessage());
+            assertEquals("[ERROR] Invalid changeTaskTiming format. Expected format: changeTaskTiming " +
+                    "/on [day] /index [index] /from [new start time] /to [new end time]", e.getMessage());
         }
     }
     @Test
@@ -63,9 +65,20 @@ class InputValidatorTest {
             InputValidator.validateAddRepeatTask(invalidInput);
             fail("Expected InvalidFormatException");
         } catch (InvalidFormatException e) {
-            assertEquals("[ERROR] Invalid addRepeatTask format. Expected format: " +
-                    "addRepeatTask /task [description] /on [day(s)] /from [start time] /to [end time] /type [f/c]", e.getMessage());
+            assertEquals("[ERROR] Invalid addRepeatTask format. Expected format: addRepeatTask /task " +
+                    "[description] /on [day(s)] /from [start time] /to [end time] /type [f/c]", e.getMessage());
         }
     }
 
+    @Test
+    public void testValidateDay() {
+        String[] inputList = {"monday", "tuesday", "wednesday", "thursday", "friday", "Monday", "MONDAY"};
+        for (String input : inputList) {
+            try {
+                InputValidator.validateDay(input);
+            } catch (InvalidDayException e) {
+                fail();
+            }
+        }
+    }
 }
