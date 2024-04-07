@@ -24,13 +24,20 @@ public class Storage {
     public String filePath;
     public static String folderPath = "data";
 
-    private static final String boxOutline = "+---------+\n";
+    public static final String boxOutline = "+---------+\n";
 
-    private static final String boxOutlineForWednesday = "+-------------+\n";
-    private static final String boxOutlineForFriday = "+------+\n";
-    private static final String lineSeparator =
+    public static final String boxOutlineForWednesday = "+-------------+\n";
+    public static final String boxOutlineForFriday = "+------+\n";
+    public static final String lineSeparator =
             ".................................................................................................\n";
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public static String getFolderPath() {
+        return folderPath;
+    }
 
     public static void setFolderPath(String newPath) {
         folderPath = newPath;

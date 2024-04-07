@@ -3,17 +3,26 @@ package seedu.duke;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.duke.Parser.DAYS;
 import static seedu.duke.Storage.*;
+import static seedu.duke.Storage.boxOutline;
+import static seedu.duke.Storage.boxOutlineForWednesday;
+import static seedu.duke.Storage.boxOutlineForFriday;
+import static seedu.duke.Storage.lineSeparator;
+
 
 public class StorageTest {
 
     private static String filePath;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         String userName = "testUser";
         filePath = "test_data/" + userName + ".txt";
         //File f = new File(filePath);
@@ -35,9 +44,21 @@ public class StorageTest {
 
 
     @AfterAll
-    static void deleteTestFile() {
+    static void resetFolderPath() {
         Storage.setFolderPath("data");
         User.setFolderPath("data");
+    }
+
+    @Test
+    void testStorageInit() {
+        User testUser = new User("testUser");
+        assertEquals("test_data/testUser.txt", testUser.getStorage().getFilePath());
+    }
+
+    @Test
+    void testSetFolderPath() {
+        Storage.setFolderPath("testPath");
+        assertEquals("testPath", Storage.getFolderPath());
     }
 
     @Test
@@ -51,23 +72,68 @@ public class StorageTest {
         assertTrue(userList.containsUser(userName), "UserList should contain the added user");
     }
 
-//    @Test
-//    public void testWriteToFileAndLoadData() throws Exception {
-//        String testPath = tempDir.resolve("testUser.txt").toString();
-//        Storage storage = new Storage(testPath);
-//        User user = new User("testUser");
-//        user.getTimetable().addUserTask("Monday", new Task("lecture", "Monday", "10:00", "11:00", "c"));
-//
-//        storage.writeTaskInFile(user);
-//
-//        Scanner scanner = new Scanner(new File(testPath));
-//        assertTrue(scanner.hasNextLine(), "Empty file.");
-//        assertEquals("Username: testUser", scanner.nextLine().trim(), "First line should contain the username");
-//
-//        // Load data and check if tasks are loaded correctly (requires modification to User and Timetable for assertion)
-//        User newUser = new User("tempUser");
-//        newUser.setStorage(new Storage(tempFilePath));
-//        newUser.getStorage().loadData(newUser);
-//        // Add assertions to verify tasks are loaded correctly
-//    }
+    @Test
+    public void testAddNewUserToFolder() {
+        UserList userList = new UserList();
+        User newUser = new User("testAddUser");
+        userList.addUser(newUser);
+        newUser.getStorage().addUserInFolder();
+
+        File directory = new File(folderPath);
+        File file = new File(directory, "testAddUser.txt");
+        System.out.println(directory.getAbsolutePath());
+        assertTrue(file.exists());
+    }
+
+    @Test
+    public void testWriteToFile() throws Exception {
+        User testUser = new User("testUser");
+        testUser.getTimetable().addUserTask("Monday", new Task("lecture", "Monday", "10:00", "11:00", "c"));
+
+        testUser.getStorage().writeTaskInFile(testUser);
+
+        Scanner scanner = new Scanner(new File(filePath));
+        assertTrue(scanner.hasNextLine(), "Empty file.");
+        assertEquals("Username: testUser", scanner.nextLine().trim(), "First line should contain the username");
+    }
+
+    @Test
+    public void testExtractTaskInfo() {
+        String line = "1. 01:00 - 02:00: lecture (type: c)";
+        Task task = extractTaskInfo(line, "Monday");
+        assertEquals("lecture", task.getDescription());
+        assertEquals("01:00", task.getStartTime().toString());
+        assertEquals("02:00", task.getEndTime().toString());
+        assertEquals("c", task.getType());
+    }
+
+    @Test
+    public void testLoadData() throws IOException {
+        writeToFile(filePath, "Username: " + "testUser" + "\n", false);
+        for (String day : DAYS) {
+            String outline;
+            switch (day) {
+            case ("Wednesday"):
+                outline = boxOutlineForWednesday;
+                break;
+            case ("Friday"):
+                outline = boxOutlineForFriday;
+                break;
+            default:
+                outline = boxOutline;
+                break;
+            }
+            writeToFile(filePath, outline, true);
+            writeToFile(filePath, "| " + day + " |" + "\n", true);
+            writeToFile(filePath, outline, true);
+
+            if (day.equals("Monday")) {
+                writeToFile(filePath, "1. 01:00 - 02:00: lecture (type: c)", true);
+            } else if (day.equals("Thursday")) {
+                
+            }
+            writeToFile(filePath, lineSeparator, true);
+            writeToFile(filePath, "\n", true);
+        }
+    }
 }
