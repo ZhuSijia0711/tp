@@ -185,10 +185,11 @@ public class Parser {
         return false;
     }
 
-    public static Task parseTask(String command) throws InvalidDayException {
+    public static Task parseTask(String command) throws InvalidDayException, InvalidFormatException {
+        InputValidator.validateAddTaskInput(command);
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String day = parts[2];
+        String day = parts[2].toLowerCase();
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];

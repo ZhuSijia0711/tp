@@ -122,7 +122,8 @@ class ParserTest {
                 "addtask /on Monday",
                 "addtask /on Monday /task description",
                 "addtask /on Monday /task description /from 09:00 /to 11:00",
-                "addtask Monday description 09:00 11:00"};
+                "addtask Monday description 09:00 11:00",
+                "addtask /on MONDAY /task description /from 09:00 /to 11:00"};
         for (String message : testMessages) {
             try {
                 Parser.parseCommand(message, userlist);
