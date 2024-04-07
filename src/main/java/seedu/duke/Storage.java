@@ -21,24 +21,22 @@ public class Storage {
     public static final int END_TIME_END_INDEX = 16;
     public static final int DESCRIPTION_INDEX = 18;
     public static final int TYPE_INDEX_INCREMENT = 7;
-    public String filePath;
+
     public static String folderPath = "data";
-
     private static final String boxOutline = "+---------+\n";
-
     private static final String boxOutlineForWednesday = "+-------------+\n";
     private static final String boxOutlineForFriday = "+------+\n";
     private static final String lineSeparator =
             ".................................................................................................\n";
+    public String filePath;
 
-
-    public static void setFolderPath(String newPath) {
-        folderPath = newPath;
-    }
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    public static void setFolderPath(String newPath) {
+        folderPath = newPath;
+    }
 
     public static void createFolder() {
         File folder = new File(folderPath);
@@ -83,7 +81,8 @@ public class Storage {
         while (s.hasNext()) {
             String line = s.nextLine();
             // ignore lines for formatting and weeks that have no tasks
-            if (line.startsWith("Username") || line.startsWith("+") || line.startsWith(".") || line.isEmpty() || line.equals("No task :)")) {
+            if (line.startsWith("Username") || line.startsWith("+") || line.startsWith(".")
+                    || line.isEmpty() || line.equals("No task :)")) {
                 continue;
             }
             if (line.startsWith("|")) {
