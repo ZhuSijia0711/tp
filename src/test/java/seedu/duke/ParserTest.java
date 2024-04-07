@@ -20,7 +20,8 @@ class ParserTest {
     }
 
     @Test
-    public void adduserCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException, NoUserException, IOException {
+    public void adduserCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException,
+            NoUserException, IOException {
         Parser.parseCommand("addUser User1", userlist);
 
         assertEquals(1, userlist.getListLength());
@@ -45,7 +46,8 @@ class ParserTest {
     }
 
     @Test
-    public void switchCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException, NoUserException, IOException {
+    public void switchCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException,
+            NoUserException, IOException {
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
@@ -84,7 +86,8 @@ class ParserTest {
     }
 
     @Test
-    public void addTaskCommandTest() throws InvalidDayException, InvalidUserException, InvalidFormatException, NoUserException, IOException {
+    public void addTaskCommandTest() throws InvalidDayException, InvalidUserException, InvalidFormatException,
+            NoUserException, IOException {
         User user1 = new User("User1");
         userlist.addUser(user1);
 
@@ -148,7 +151,8 @@ class ParserTest {
     }
 
     @Test
-    public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException, NoUserException, IOException {
+    public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException,
+            NoUserException, IOException {
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
@@ -163,5 +167,40 @@ class ParserTest {
         assertEquals("lecture", addedTaskUser2.getDescription());
         assertEquals("09:00", addedTaskUser2.getStartTime().toString());
         assertEquals("11:00", addedTaskUser2.getEndTime().toString());
+    }
+
+    @Test
+    public void changeTaskTypeTest() throws InvalidDayException, NoUserException, IOException,
+            InvalidUserException, InvalidFormatException {
+        User user1 = new User("User1");
+        userlist.addUser(user1);
+        Parser.parseCommand("addtask /on Monday /task test1 /from 9:00 /to 11:00 /type f", userlist);
+        Task task = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
+        assertEquals("f", task.getType());
+
+        Parser.parseCommand("changetasktype /on Monday /index 1 /type c", userlist);
+        assertEquals("c", task.getType());
+
+        Parser.parseCommand("changetasktype /on Monday /index 1 /type c", userlist);
+        assertEquals("c", task.getType());
+    }
+
+    @Test
+    public void invalidChangeTaskTypeTest() throws InvalidDayException, NoUserException, IOException,
+            InvalidUserException, InvalidFormatException {
+        User user1 = new User("User1");
+        userlist.addUser(user1);
+        Parser.parseCommand("addtask /on Monday /task test1 /from 9:00 /to 11:00 /type f", userlist);
+        Task task = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
+        assertEquals("f", task.getType());
+
+        try {
+            Parser.parseCommand("changetasktype /on Monday /index 2 /type c", userlist);
+            fail();
+        } catch (InvalidFormatException e) {
+            assertEquals("The selected task does not exist. ", e.getMessage());
+        } catch (IOException e) {
+            fail();
+        }
     }
 }
