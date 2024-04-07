@@ -189,7 +189,8 @@ public class Parser {
         InputValidator.validateAddTaskInput(command);
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String day = parts[2].toLowerCase();
+        String dayBase = parts[2].toLowerCase();
+        String day = dayBase.substring(0, 1).toUpperCase() + dayBase.substring(1);
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
