@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Parser {
-
+    private static final int COMMAND_INDEX_DAY = 2;
     protected static final String[] DAYS = new String[]
         {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
@@ -83,7 +83,7 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("changetasktype")) {
             changeTaskType(command, userList);
         } else if (command.toLowerCase().startsWith("todaytask")) {
-            todayTask(userList);
+            todayTask(command,userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
@@ -112,7 +112,7 @@ public class Parser {
             InputValidator.validateChangeTaskType(command);
             String[] parts = command.split("\\s+");
             List<String> wordList = Arrays.asList(parts);
-            String day = wordList.get(2);
+            String day = wordList.get(COMMAND_INDEX_DAY);
             int index = Integer.parseInt(wordList.get(wordList.indexOf("/index") + 1));
             String newType = wordList.get(wordList.indexOf("/type") + 1);
             InputValidator.validateDay(day);
@@ -230,16 +230,20 @@ public class Parser {
      *
      * @param userList The list of users.
      */
-    public static void todayTask(UserList userList) {
+    public static void todayTask(String command, UserList userList) {
+        String[] parts = command.trim().split("\\s+");
+        if(parts.length > 1){
+            System.out.println("Please simply use 'todaytask' to view today's task" +
+                    " without additional text!");
+            return;
+        }
         String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString();
         String capitalizedDay = Parser.capitalizeFirstLetter(dayOfWeek);
         ArrayList<Task> tasksForToday = userList.getActiveUser().getTimetable().getWeeklyTasks().get(capitalizedDay);
-
         if (tasksForToday.isEmpty()) {
             UI.printNoTask("today");
             return;
         }
-
         UI.printLine();
         UI.printDayHeader("Today");
         int count = 1;
