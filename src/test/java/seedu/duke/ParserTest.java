@@ -6,12 +6,10 @@ import seedu.duke.exceptions.InvalidFormatException;
 import seedu.duke.exceptions.InvalidUserException;
 import seedu.duke.exceptions.NoUserException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static seedu.duke.Storage.folderPath;
 
 class ParserTest {
     UserList userlist = new UserList();

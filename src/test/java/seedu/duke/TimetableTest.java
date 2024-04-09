@@ -31,7 +31,7 @@ class TimetableTest {
         Timetable.compareTimetable(timetable1, timetable2);
     }
     @Test
-    public void testChangeFlexibleTaskTiming_CorrectInput() {
+    public void testChangeFlexibleTaskTiming_correctInput() {
         Timetable timetable = new Timetable();
         Task flexibleTask = new Task("lec", "monday", "09:00", "11:00", "f");
         timetable.addUserTask("monday", flexibleTask);
@@ -43,7 +43,7 @@ class TimetableTest {
         }
     }
     @Test
-    public void testChangeFlexibleTaskTiming_InvalidIndex(){
+    public void testChangeFlexibleTaskTiming_invalidIndex(){
         Timetable timetable = new Timetable();
         try{
             timetable.changeFlexibleTaskTiming("monday", 0, LocalTime.of(11, 0),
@@ -54,7 +54,7 @@ class TimetableTest {
         }
     }
     @Test
-    public void testChangeFlexibleTaskTiming_NonFlexibleTask() {
+    public void testChangeFlexibleTaskTiming_nonFlexibleTask() {
         Timetable timetable = new Timetable();
         Task nonFlexibleTask = new Task("lec", "monday", "09:00", "11:00", "c");
         timetable.addUserTask("monday", nonFlexibleTask);
@@ -67,7 +67,7 @@ class TimetableTest {
         }
     }
     @Test
-    public void testChangeTaskType_ValidInput() {
+    public void testChangeTaskType_validInput() {
         Timetable timetable = new Timetable();
         Task task = new Task("lec", "monday", "09:00", "11:00", "f");
         timetable.addUserTask("monday", task);
@@ -78,7 +78,7 @@ class TimetableTest {
         }
     }
     @Test
-    public void testChangeTaskType_InvalidIndex() {
+    public void testChangeTaskType_invalidIndex() {
         Timetable timetable = new Timetable();
         try {
             timetable.changeTaskType("monday", 0, "c");
