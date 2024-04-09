@@ -46,6 +46,22 @@ class ParserTest {
     }
 
     @Test
+    public void compareCommandTest() {
+        User user1 = new User("User1");
+        User user2 = new User("User2");
+        userlist.addUser(user1);
+        userlist.addUser(user2);
+
+        try {
+            Parser.parseCommand("compare User1 User1", userlist);
+            Parser.parseCommand("compare user1 user1", userlist);
+            Parser.parseCommand("compare User1 User2", userlist);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     public void switchCommandTest() throws InvalidDayException, InvalidFormatException, InvalidUserException,
             NoUserException, IOException {
         User user1 = new User("User1");
@@ -158,7 +174,7 @@ class ParserTest {
         userlist.addUser(user1);
         userlist.addUser(user2);
 
-        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 11:00 /type f", userlist);
+        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 11:00", userlist);
 
         Task addedTaskUser1 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
         Task addedTaskUser2 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);

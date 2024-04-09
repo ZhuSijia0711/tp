@@ -20,6 +20,11 @@ public class Parser {
     protected static final String[] DAYS = new String[]
         {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
+    public static String capitalizeFirstLetter(String input) {
+        String lowerCase = input.toLowerCase();
+        return lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+    }
+
     /**
      * Parses User Input and Identifies the command used.
      *
@@ -44,7 +49,7 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("adduser")) {
             InputValidator.validateAddUserInput(command);
             String[] parts = command.split("\\s+");
-            String userName = parts[1];
+            String userName = Parser.capitalizeFirstLetter(parts[1]);
             User newUser = new User(userName);
             UI.printNewUser(newUser.getName());
             userList.addUser(newUser);
@@ -78,17 +83,18 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("changetasktype")) {
             changeTaskType(command, userList);
         } else if (command.toLowerCase().startsWith("todaytask")) {
-            todaytask(userList);
+            todayTask(userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
             InputValidator.validateCompareInput(command);
             String[] parts = command.split("\\s+");
-            String user1 = parts[1];
-            String user2 = parts[2];
+            String user1 = capitalizeFirstLetter(parts[1]);
+            String user2 = capitalizeFirstLetter(parts[2]);
             InputValidator.validateUserInput(user1, userList);
             InputValidator.validateUserInput(user2, userList);
+            UI.printCompareUsers(user1, user2);
             UI.printSharedTime(Timetable.compareTimetable(userList.findUser(user1).getTimetable(),
                     userList.findUser(user2).getTimetable()));
         } else if (command.toLowerCase().startsWith("addforall")) {
@@ -180,7 +186,7 @@ public class Parser {
     public static boolean checkClash(Task taskToBeAdded, User user) {
         Timetable timetable = user.getTimetable();
         String day = taskToBeAdded.day;
-        String capitalisedDay = day.substring(0, 1).toUpperCase() + day.substring(1);
+        String capitalisedDay = Parser.capitalizeFirstLetter(day);
         timetable.getWeeklyTasks().get(capitalisedDay).sort(Comparator.comparing(Task::getStartTime));
         for (Task task : timetable.getWeeklyTasks().get(capitalisedDay)) {
             if (taskToBeAdded.startTime.isAfter(task.getStartTime()) &&
@@ -197,8 +203,7 @@ public class Parser {
         InputValidator.validateAddTaskInput(command);
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String dayBase = parts[2].toLowerCase();
-        String day = dayBase.substring(0, 1).toUpperCase() + dayBase.substring(1);
+        String day = Parser.capitalizeFirstLetter(parts[2]);
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
@@ -210,8 +215,7 @@ public class Parser {
     public static Task parseAddForAllTask(String command) throws InvalidDayException {
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String dayBase = parts[2].toLowerCase();
-        String day = dayBase.substring(0, 1).toUpperCase() + dayBase.substring(1);
+        String day = Parser.capitalizeFirstLetter(parts[2]);
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
@@ -226,9 +230,9 @@ public class Parser {
      *
      * @param userList The list of users.
      */
-    public static void todaytask(UserList userList) {
-        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString().toLowerCase();
-        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+    public static void todayTask(UserList userList) {
+        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString();
+        String capitalizedDay = Parser.capitalizeFirstLetter(dayOfWeek);
         ArrayList<Task> tasksForToday = userList.getActiveUser().getTimetable().getWeeklyTasks().get(capitalizedDay);
 
         if (tasksForToday.isEmpty()) {
@@ -236,7 +240,7 @@ public class Parser {
             return;
         }
 
-        System.out.println("_________________________________________");
+        UI.printLine();
         UI.printDayHeader("Today");
         int count = 1;
         for (Task task : tasksForToday) {
@@ -347,8 +351,8 @@ public class Parser {
 
     private static void printNextTask(User currentUser) {
         LocalTime currentTime = LocalTime.now();
-        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString().toLowerCase();
-        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
+        String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString();
+        String capitalizedDay = Parser.capitalizeFirstLetter(dayOfWeek);
         Task current = new Task("temp", dayOfWeek, currentTime.toString(), currentTime.toString(), "f");
 
         ArrayList<Task> tasksOfDay = currentUser.getTimetable().getWeeklyTasks().get(capitalizedDay);

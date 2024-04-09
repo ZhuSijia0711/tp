@@ -2,6 +2,7 @@ package seedu.duke.ui;
 
 import seedu.duke.Task;
 import seedu.duke.Timetable;
+import seedu.duke.User;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -81,11 +82,15 @@ public class UI {
      */
     public static void printSharedTime(Timetable merged) {
         for (String day : Timetable.DAYS) {
-            System.out.println("_________________________________________");
+            UI.printLine();
             System.out.println("Shared free time on " + day + ":");
             findOverlappingFreeTime(merged.getWeeklyTasks().get(day), day);
 
         }
+    }
+
+    public static void printCompareUsers(String user1, String user2) {
+        System.out.println("Comparing timetables of " + user1 + " and " + user2 + ": ");
     }
 
     public static void printComparingAll() {
