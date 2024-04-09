@@ -1,49 +1,62 @@
 Timetable comparison app opened.
-New user added: simon
-The active user is: simon
-The current users are:
-simon
-The following task is added: lecture (Monday from 09:00 to 11:00)
-Monday:
-lecture (Monday from 09:00 to 11:00)
-NO TASK FOR Tuesday
-NO TASK FOR Wednesday
-NO TASK FOR Thursday
-NO TASK FOR Friday
-NO TASK FOR Saturday
-NO TASK FOR Sunday
-New user added: tim
-The active user is: tim
-The following task is added: lecture (Monday from 09:00 to 11:00)
-Monday:
-lecture (Monday from 09:00 to 11:00)
-NO TASK FOR Tuesday
-NO TASK FOR Wednesday
-NO TASK FOR Thursday
-NO TASK FOR Friday
-NO TASK FOR Saturday
-NO TASK FOR Sunday
-----------------------
-Shared Free Time on Monday:
-00:00 - 09:00: Overlapping Free Time
-11:00 - 23:59: Overlapping Free Time
-----------------------
-Shared Free Time on Tuesday:
-** Whole day is free on Tuesday
-----------------------
-Shared Free Time on Wednesday:
-** Whole day is free on Wednesday
-----------------------
-Shared Free Time on Thursday:
-** Whole day is free on Thursday
-----------------------
-Shared Free Time on Friday:
-** Whole day is free on Friday
-----------------------
-Shared Free Time on Saturday:
-** Whole day is free on Saturday
-----------------------
-Shared Free Time on Sunday:
-** Whole day is free on Sunday
-[ERROR] Invalid day. Please enter a day from Monday - Sunday.
-Bye.
+Folder created successfully.
+Note: use hh:mm 24hr time format (ex. 13:00)
+List of available commands:
+list: list all users
+bye: exit the app
+current: view current user
+view: view timetable of current user
+next: view your next task
+adduser: add new user
+switch <username>: switch to user
+addtask /on <day> /from <start time> /to <end time>: add task for current user
+addtwdc /on <day> /from <start time> /to <end time>deletetask: delete task
+changetasktiming:
+changetasktype <f/c>: change the type of a task (flexible/confirmed)
+compareall: compare timetables of all users
+compare <user1> <user2>: compare timetables of specified users
+addforall /on <day> /from <start time> /to <end time>: add task for all users
+viewcommonevents: view common events
+____________________________________________________________
+New user added: Simon
+The active user is: Simon
+File created: Simon.txt
+The following task is added: lecture (Monday from 09:00 to 11:00) type: f
+Timetable has been written to data/Simon.txt
+New user added: Tim
+File created: Tim.txt
+The active user is: Tim
+The following task is added: lecture (Monday from 09:00 to 11:00) type: f
+Timetable has been written to data/Tim.txt
+_________________________________________
+Monday :
+    1. lecture (Monday from 09:00 to 11:00) type: f
+No task for Tuesday!
+No task for Wednesday!
+No task for Thursday!
+No task for Friday!
+No task for Saturday!
+No task for Sunday!
+Comparing timetables of Simon and Tim:
+____________________________________________________________
+Shared free time on Monday:
+    00:00 - 09:00
+    11:00 - 23:59
+____________________________________________________________
+Shared free time on Tuesday:
+    ** Whole day is free on Tuesday
+____________________________________________________________
+Shared free time on Wednesday:
+    ** Whole day is free on Wednesday
+____________________________________________________________
+Shared free time on Thursday:
+    ** Whole day is free on Thursday
+____________________________________________________________
+Shared free time on Friday:
+    ** Whole day is free on Friday
+____________________________________________________________
+Shared free time on Saturday:
+    ** Whole day is free on Saturday
+____________________________________________________________
+Shared free time on Sunday:
+    ** Whole day is free on Sunday
