@@ -294,8 +294,9 @@ public class Parser {
             String type = parts[wordlist.indexOf("/type") + 1];
             User currentUser = userList.getActiveUser();
             for (String day : days) {
-                Task task = new Task(description, day, startTime, endTime, type);
-                currentUser.getTimetable().addUserTask(day, task);
+                String capitalizedDay = Parser.capitalizeFirstLetter(day);
+                Task task = new Task(description, capitalizedDay, startTime, endTime, type);
+                currentUser.getTimetable().addUserTask(capitalizedDay, task);
             }
             currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Repeated task added successfully!");
