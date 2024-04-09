@@ -23,12 +23,16 @@ public class Storage {
     public static final int TYPE_INDEX_INCREMENT = 7;
 
     public static String folderPath = "data";
-    public static final String boxOutline = "+---------+\n";
-    public static final String boxOutlineForWednesday = "+-------------+\n";
-    public static final String boxOutlineForFriday = "+------+\n";
-    public static final String lineSeparator =
+    public static final String BOX_OUTLINE = "+---------+\n";
+    public static final String BOX_OUTLINE_FOR_WEDNESDAY = "+-------------+\n";
+    public static final String BOX_OUTLINE_FOR_FRIDAY = "+------+\n";
+    public static final String LINE_SEPARATOR =
             ".................................................................................................\n";
     public String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
 
     public String getFilePath() {
         return filePath;
@@ -41,11 +45,7 @@ public class Storage {
     public static void setFolderPath(String newPath) {
         folderPath = newPath;
     }
-
-    public Storage(String filePath) {
-        this.filePath = filePath;
-    }
-
+    
     public static void createFolder() {
         File folder = new File(folderPath);
 
@@ -157,13 +157,13 @@ public class Storage {
             String outline;
             switch (day) {
             case ("Wednesday"):
-                outline = boxOutlineForWednesday;
+                outline = BOX_OUTLINE_FOR_WEDNESDAY;
                 break;
             case ("Friday"):
-                outline = boxOutlineForFriday;
+                outline = BOX_OUTLINE_FOR_FRIDAY;
                 break;
             default:
-                outline = boxOutline;
+                outline = BOX_OUTLINE;
                 break;
             }
             writeToFile(filePath, outline, true);
@@ -180,7 +180,7 @@ public class Storage {
                     taskCount += 1;
                 }
             }
-            writeToFile(filePath, lineSeparator, true);
+            writeToFile(filePath, LINE_SEPARATOR, true);
             writeToFile(filePath, "\n", true);
         }
 

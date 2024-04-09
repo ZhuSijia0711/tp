@@ -2,7 +2,6 @@ package seedu.duke.ui;
 
 import seedu.duke.Task;
 import seedu.duke.Timetable;
-import seedu.duke.User;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
