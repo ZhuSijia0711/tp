@@ -16,14 +16,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Parser {
-
-    public static final String[] DAYS = new String[]
-        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-
     public static String capitalizeFirstLetter(String input) {
         String lowerCase = input.toLowerCase();
         return lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
     }
+
+    protected static final String[] DAYS = new String[]
+        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    private static final int COMMAND_INDEX_DAY = 2;
 
     /**
      * Parses User Input and Identifies the command used.
@@ -83,7 +83,7 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("changetasktype")) {
             changeTaskType(command, userList);
         } else if (command.toLowerCase().startsWith("todaytask")) {
-            todayTask(userList);
+            todayTask(command,userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
@@ -112,7 +112,7 @@ public class Parser {
             InputValidator.validateChangeTaskType(command);
             String[] parts = command.split("\\s+");
             List<String> wordList = Arrays.asList(parts);
-            String day = wordList.get(2);
+            String day = wordList.get(COMMAND_INDEX_DAY);
             int index = Integer.parseInt(wordList.get(wordList.indexOf("/index") + 1));
             String newType = wordList.get(wordList.indexOf("/type") + 1);
             InputValidator.validateDay(day);
@@ -230,16 +230,20 @@ public class Parser {
      *
      * @param userList The list of users.
      */
-    public static void todayTask(UserList userList) {
+    public static void todayTask(String command, UserList userList) {
+        String[] parts = command.trim().split("\\s+");
+        if(parts.length > 1){
+            System.out.println("Please simply use 'todaytask' to view today's task" +
+                    " without additional text!");
+            return;
+        }
         String dayOfWeek = DayOfWeek.from(LocalDate.now()).toString();
         String capitalizedDay = Parser.capitalizeFirstLetter(dayOfWeek);
         ArrayList<Task> tasksForToday = userList.getActiveUser().getTimetable().getWeeklyTasks().get(capitalizedDay);
-
         if (tasksForToday.isEmpty()) {
             UI.printNoTask("today");
             return;
         }
-
         UI.printLine();
         UI.printDayHeader("Today");
         int count = 1;
@@ -287,22 +291,27 @@ public class Parser {
             int endDaysIndex = wordlist.indexOf("/from");
             String[] days = Arrays.copyOfRange(parts, daysIndex, endDaysIndex);
             if (days.length < 2) {
-                throw new InvalidFormatException("Please enter at least 2 days, or you want to use addtask command!");
+                throw new InvalidDayException("Please enter at least 2 days, or you want to use addtask command!");
             }
             String startTime = parts[wordlist.indexOf("/from") + 1];
             String endTime = parts[wordlist.indexOf("/to") + 1];
             String type = parts[wordlist.indexOf("/type") + 1];
             User currentUser = userList.getActiveUser();
             for (String day : days) {
-                Task task = new Task(description, day, startTime, endTime, type);
-                currentUser.getTimetable().addUserTask(day, task);
+                String capitalizedDay = Parser.capitalizeFirstLetter(day);
+                Task task = new Task(description, capitalizedDay, startTime, endTime, type);
+                currentUser.getTimetable().addUserTask(capitalizedDay, task);
             }
             currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Repeated task added successfully!");
+        } catch (InvalidDayException e) {
+            System.out.println("Invalid day input: " + e.getMessage());
         } catch (InvalidFormatException e) {
-            System.out.println("Please enter at least 2 days, or you want to use addtask command!");
+            System.out.println("[ERROR] Invalid addRepeatTask format.\n" +
+                    "Expected format: addRepeatTask /task [description] /on [day(s)] /from [start time]" +
+                    "/to [end time] /type [f/c]");
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

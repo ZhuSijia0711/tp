@@ -13,7 +13,7 @@ java  -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt > ACTUAL.
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
 
-sed -i 's/[[:space:]]*$//' EXPECTED.TXT
+sed -i 's/[[:space:]]*$//' EXPECTED-UNIX.TXT
 sed -i 's/[[:space:]]*$//' ACTUAL.TXT
 
 diff EXPECTED-UNIX.TXT ACTUAL.TXT
