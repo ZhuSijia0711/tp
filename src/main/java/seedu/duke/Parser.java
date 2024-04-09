@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Parser {
 
-    protected static final String[] DAYS = new String[]
+    public static final String[] DAYS = new String[]
         {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     public static String capitalizeFirstLetter(String input) {
