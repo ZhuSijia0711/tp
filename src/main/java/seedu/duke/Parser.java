@@ -20,13 +20,24 @@ public class Parser {
         {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private static final int COMMAND_INDEX_DAY = 2;
-    
+    public static final int USERS_INDEX = 5;
+    public static final int DAY_INDEX = 3;
+    public static final int DESCRIPTION_INDEX = 5;
+    public static final int START_INDEX = 5;
+    public static final int END_INDEX = 3;
+    public static final int TYPE_INDEX = 5;
+    public static final int DAY_INDEX_IN_ADD_FOR_ALL = 2;
+    public static final int USER_PART = 1;
+    public static final int DAY_PART = 2;
+    public static final int DESCRIPTION_PART = 3;
+    public static final int START_PART = 4;
+    public static final int END_PART = 5;
+    public static final int TYPE_PART = 6;
+
     public static String capitalizeFirstLetter(String input) {
         String lowerCase = input.toLowerCase();
         return lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
     }
-
-
 
     /**
      * Parses User Input and Identifies the command used.
@@ -34,7 +45,7 @@ public class Parser {
      * @param command The users text input.
      */
     public static void parseCommand(String command, UserList userList) throws
-            InvalidFormatException, InvalidDayException, InvalidUserException, NoUserException, IOException {
+        InvalidFormatException, InvalidDayException, InvalidUserException, NoUserException, IOException {
         if (command.equalsIgnoreCase("list")) {
             UI.printListingUsers();
             userList.listAll();
@@ -103,7 +114,11 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("addforall")) {
             InputValidator.validateAddTaskForAll(command);
             addTaskForAll(command, userList);
-        } else if (command.toLowerCase().startsWith("viewcommonevents")) {
+        } else if (command.toLowerCase().startsWith("addfor")) {
+            InputValidator.validAddFor(command);
+            addFor(command, userList);
+        }
+        else if (command.toLowerCase().startsWith("viewcommonevents")) {
             printConfirmedEvent(userList);
         } else {
             UI.printInvalidCommand();
@@ -193,9 +208,13 @@ public class Parser {
         timetable.getWeeklyTasks().get(capitalisedDay).sort(Comparator.comparing(Task::getStartTime));
         for (Task task : timetable.getWeeklyTasks().get(capitalisedDay)) {
             if (taskToBeAdded.startTime.isAfter(task.getStartTime()) &&
-                    taskToBeAdded.startTime.isBefore(task.getEndTime())
-                    || (taskToBeAdded.endTime.isAfter(task.getStartTime()) &&
-                    taskToBeAdded.endTime.isBefore(task.getEndTime()))) {
+                taskToBeAdded.startTime.isBefore(task.getEndTime())
+                || (taskToBeAdded.endTime.isAfter(task.getStartTime()) &&
+                taskToBeAdded.endTime.isBefore(task.getEndTime()))
+                || (taskToBeAdded.startTime.equals(task.getStartTime()))
+                || (taskToBeAdded.endTime.equals(task.getEndTime()))
+                || (taskToBeAdded.startTime.isBefore(task.getStartTime()) &&
+                taskToBeAdded.endTime.isAfter(task.getEndTime()))) {
                 return true;
             }
         }
@@ -218,7 +237,7 @@ public class Parser {
     public static Task parseAddForAllTask(String command) throws InvalidDayException {
         String[] parts = command.split("\\s+");
         List<String> wordList = Arrays.asList(parts);
-        String day = Parser.capitalizeFirstLetter(parts[2]);
+        String day = Parser.capitalizeFirstLetter(parts[DAY_INDEX_IN_ADD_FOR_ALL]);
         String description = parseDescription(wordList);
         String startTime = parts[wordList.indexOf("/from") + 1];
         String endTime = parts[wordList.indexOf("/to") + 1];
@@ -383,10 +402,53 @@ public class Parser {
                     UI.printNoTasks();
                 } else {
                     UI.printNext();
-                    System.out.println(nextTask.toString());
+                    System.out.println(nextTask);
                 }
                 return;
             }
+        }
+    }
+
+    private static void addFor(String command, UserList userList) throws IOException, InvalidUserException {
+        String[] words = command.split("/");
+        String users = words[USER_PART].substring(USERS_INDEX).trim(); // to exclude words "/user"
+        String day = words[DAY_PART].substring(DAY_INDEX).trim(); // to exclude words "/on"
+        String description = words[DESCRIPTION_PART].substring(DESCRIPTION_INDEX).trim(); // to exclude words "/task"
+        String start = words[START_PART].substring(START_INDEX).trim(); // to exclude words "/from"
+        String end = words[END_PART].substring(END_INDEX).trim(); // to exclude words "/to"
+        String type = words[TYPE_PART].substring(TYPE_INDEX).trim(); // to exclude words "/type"
+        String[] usernames = users.split(",");
+
+        Task task = new Task(description, day, start, end, type);
+        ArrayList<String> clashedUsers = new ArrayList<>();
+        ArrayList<String> invalidUsers = new ArrayList<>();
+        for (String username : usernames) {
+            User user = userList.findUser(username.trim());
+            if (user == null) {
+                invalidUsers.add(username.trim());
+                continue;
+            }
+            if (checkClash(task, user)) {
+                clashedUsers.add(username.trim());
+            }
+        }
+
+        if (!invalidUsers.isEmpty() || !clashedUsers.isEmpty()) {
+            StringBuilder errorMessage = new StringBuilder();
+            if (!invalidUsers.isEmpty()) {
+                errorMessage.append("Invalid users: ").append(String.join(", ", invalidUsers)).append(". ");
+            }
+            if (!clashedUsers.isEmpty()) {
+                errorMessage.append("Users with task clashes: ").append(String.join(", ", clashedUsers)).append(". ");
+            }
+            throw new InvalidUserException(errorMessage.toString());
+        }
+
+
+        for (String username : usernames) {
+            User user = userList.findUser(username.trim());
+            user.getTimetable().addUserTask(day, task);
+            user.getStorage().writeTaskInFile(user);
         }
     }
 }

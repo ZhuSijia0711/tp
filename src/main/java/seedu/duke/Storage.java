@@ -45,7 +45,7 @@ public class Storage {
     public static void setFolderPath(String newPath) {
         folderPath = newPath;
     }
-    
+
     public static void createFolder() {
         File folder = new File(folderPath);
 

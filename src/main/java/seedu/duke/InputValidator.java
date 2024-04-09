@@ -201,5 +201,22 @@ public class InputValidator {
                     "/to [end time] /type [f/c]");
         }
     }
+
+    public static void validAddFor(String input) throws InvalidFormatException {
+        String commandPattern = "(?i)addfor\\s+";
+        String usersPattern = "/user\\s+([\\w\\s,]+)\\s+";
+        String dayPattern = "/on\\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\\s+";
+        String taskDescriptionPattern = "(?i)/task\\s+([\\w\\s]+)\\s+";
+        String startPattern = "/from\\s+(\\d{1,2}:\\d{2})\\s+";
+        String endPattern = "/to\\s+(\\d{1,2}:\\d{2})\\s+";
+        String typePattern = "/type\\s+([cfCF])";
+        String suffix = "$";
+        String pattern = commandPattern + usersPattern + dayPattern + taskDescriptionPattern + startPattern + endPattern + typePattern + suffix;
+
+        if (!input.matches(pattern)) {
+            throw new InvalidFormatException("[ERROR] Invalid addfor format. " +
+                "Expected format: addfor /user [user1], [user2], ... /on [day] /index [index] /type [f/c]");
+        }
+    }
 }
 
