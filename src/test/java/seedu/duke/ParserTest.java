@@ -9,7 +9,9 @@ import seedu.duke.exceptions.NoUserException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ParserTest {
     UserList userlist = new UserList();
@@ -143,11 +145,11 @@ class ParserTest {
         String expectedErrorMessage = "[ERROR] Invalid addtask format. Expected format: addtask /on [day]" +
                 " /task [description] /from [start time] /to [end time] /type [f/c]";
         String[] testMessages = {"addtask",
-                "addtask /on Monday",
-                "addtask /on Monday /task description",
-                "addtask /on Monday /task description /from 09:00 /to 11:00",
-                "addtask Monday description 09:00 11:00",
-                "addtask /on MONDAY /task description /from 09:00 /to 11:00"};
+            "addtask /on Monday",
+            "addtask /on Monday /task description",
+            "addtask /on Monday /task description /from 09:00 /to 11:00",
+            "addtask Monday description 09:00 11:00",
+            "addtask /on MONDAY /task description /from 09:00 /to 11:00"};
         for (String message : testMessages) {
             try {
                 Parser.parseCommand(message, userlist);
@@ -174,6 +176,9 @@ class ParserTest {
     @Test
     public void addForAllTest() throws InvalidDayException, InvalidUserException, InvalidFormatException,
             NoUserException, IOException {
+        Storage.setFolderPath("test_data");
+        User.setFolderPath("test_data");
+
         User user1 = new User("User1");
         User user2 = new User("User2");
         userlist.addUser(user1);
@@ -193,6 +198,9 @@ class ParserTest {
     @Test
     public void changeTaskTypeTest() throws InvalidDayException, NoUserException, IOException,
             InvalidUserException, InvalidFormatException {
+        Storage.setFolderPath("test_data");
+        User.setFolderPath("test_data");
+
         User user1 = new User("User1");
         userlist.addUser(user1);
         Parser.parseCommand("addtask /on Monday /task test1 /from 9:00 /to 11:00 /type f", userlist);
@@ -209,6 +217,9 @@ class ParserTest {
     @Test
     public void invalidChangeTaskTypeTest() throws InvalidDayException, NoUserException, IOException,
             InvalidUserException, InvalidFormatException {
+        Storage.setFolderPath("test_data");
+        User.setFolderPath("test_data");
+
         User user1 = new User("User1");
         userlist.addUser(user1);
         Parser.parseCommand("addtask /on Monday /task test1 /from 9:00 /to 11:00 /type f", userlist);
