@@ -29,7 +29,7 @@ public class Parser {
     private static final int DAY_INDEX_IN_ADD_FOR_ALL = 2;
     private static final int USER_PART = 1;
     private static final int DAY_PART = 2;
-    public static final int DESCRIPTION_PART = 3;
+    private static final int DESCRIPTION_PART = 3;
     private static final int START_PART = 4;
     private static final int END_PART = 5;
     private static final int TYPE_PART = 6;
