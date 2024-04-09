@@ -16,13 +16,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Parser {
+    public static final String[] DAYS = new String[]
+        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
     public static String capitalizeFirstLetter(String input) {
         String lowerCase = input.toLowerCase();
         return lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
     }
 
-    protected static final String[] DAYS = new String[]
-        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private static final int COMMAND_INDEX_DAY = 2;
 
     /**
