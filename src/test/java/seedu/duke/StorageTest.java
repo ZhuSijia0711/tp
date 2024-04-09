@@ -1,6 +1,8 @@
 package seedu.duke;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +11,14 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.duke.Parser.DAYS;
-import static seedu.duke.Storage.*;
-import static seedu.duke.Storage.boxOutline;
-import static seedu.duke.Storage.boxOutlineForWednesday;
-import static seedu.duke.Storage.boxOutlineForFriday;
-import static seedu.duke.Storage.lineSeparator;
+import static seedu.duke.Storage.folderPath;
+import static seedu.duke.Storage.setFolderPath;
+import static seedu.duke.Storage.writeToFile;
+import static seedu.duke.Storage.extractTaskInfo;
+import static seedu.duke.Storage.BOX_OUTLINE;
+import static seedu.duke.Storage.BOX_OUTLINE_FOR_WEDNESDAY;
+import static seedu.duke.Storage.BOX_OUTLINE_FOR_FRIDAY;
+import static seedu.duke.Storage.LINE_SEPARATOR;
 
 
 public class StorageTest {
@@ -24,8 +29,7 @@ public class StorageTest {
     void setUp() {
         String userName = "testUser";
         filePath = "test_data/" + userName + ".txt";
-        //File f = new File(filePath);
-        Storage.setFolderPath("test_data");
+        setFolderPath("test_data");
         User.setFolderPath("test_data");
         File folder = new File(folderPath);
         boolean folderCreated;
@@ -113,13 +117,13 @@ public class StorageTest {
             String outline;
             switch (day) {
             case ("Wednesday"):
-                outline = boxOutlineForWednesday;
+                outline = BOX_OUTLINE_FOR_WEDNESDAY;
                 break;
             case ("Friday"):
-                outline = boxOutlineForFriday;
+                outline = BOX_OUTLINE_FOR_FRIDAY;
                 break;
             default:
-                outline = boxOutline;
+                outline = BOX_OUTLINE;
                 break;
             }
             writeToFile(filePath, outline, true);
@@ -131,7 +135,7 @@ public class StorageTest {
             } else if (day.equals("Thursday")) {
                 writeToFile(filePath, "2. 02:00 - 03:00: lecture (type: f)", true);
             }
-            writeToFile(filePath, lineSeparator, true);
+            writeToFile(filePath, LINE_SEPARATOR, true);
             writeToFile(filePath, "\n", true);
         }
     }
