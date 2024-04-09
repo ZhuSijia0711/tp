@@ -45,4 +45,5 @@ Shared Free Time on Saturday:
 ----------------------
 Shared Free Time on Sunday:
 ** Whole day is free on Sunday
+[ERROR] Invalid day. Please enter a day from Monday - Sunday.
 Bye.
