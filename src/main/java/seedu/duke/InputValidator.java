@@ -116,7 +116,7 @@ public class InputValidator {
             throw new InvalidUserException("[ERROR] Current User List is empty. Please add users.");
         }
         for (User u : userList.getUsers()) {
-            if (u.getName().toLowerCase().equals(input)) {
+            if (u.getName().equals(input)) {
                 return;
             }
         }
