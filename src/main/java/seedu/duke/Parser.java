@@ -287,7 +287,7 @@ public class Parser {
             int endDaysIndex = wordlist.indexOf("/from");
             String[] days = Arrays.copyOfRange(parts, daysIndex, endDaysIndex);
             if (days.length < 2) {
-                throw new InvalidFormatException("Please enter at least 2 days, or you want to use addtask command!");
+                throw new InvalidDayException("Please enter at least 2 days, or you want to use addtask command!");
             }
             String startTime = parts[wordlist.indexOf("/from") + 1];
             String endTime = parts[wordlist.indexOf("/to") + 1];
@@ -300,10 +300,14 @@ public class Parser {
             }
             currentUser.getStorage().writeTaskInFile(currentUser);
             System.out.println("Repeated task added successfully!");
+        } catch (InvalidDayException e) {
+            System.out.println("Invalid day input: " + e.getMessage());
         } catch (InvalidFormatException e) {
-            System.out.println("Please enter at least 2 days, or you want to use addtask command!");
+            System.out.println("[ERROR] Invalid addRepeatTask format.\n" +
+                    "Expected format: addRepeatTask /task [description] /on [day(s)] /from [start time]" +
+                    "/to [end time] /type [f/c]");
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
