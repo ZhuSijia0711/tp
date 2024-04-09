@@ -6,10 +6,12 @@ import seedu.duke.exceptions.InvalidFormatException;
 import seedu.duke.exceptions.InvalidUserException;
 import seedu.duke.exceptions.NoUserException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static seedu.duke.Storage.folderPath;
 
 class ParserTest {
     UserList userlist = new UserList();
@@ -88,6 +90,11 @@ class ParserTest {
     @Test
     public void addTaskCommandTest() throws InvalidDayException, InvalidUserException, InvalidFormatException,
             NoUserException, IOException {
+
+        //
+        Storage.setFolderPath("test_data");
+        User.setFolderPath("test_data");
+
         User user1 = new User("User1");
         userlist.addUser(user1);
 
@@ -158,7 +165,7 @@ class ParserTest {
         userlist.addUser(user1);
         userlist.addUser(user2);
 
-        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 11:00 /type f", userlist);
+        Parser.parseCommand("addforall /on Monday /task lecture /from 9:00 /to 11:00", userlist);
 
         Task addedTaskUser1 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);
         Task addedTaskUser2 = user1.getTimetable().getWeeklyTasks().get("Monday").get(0);

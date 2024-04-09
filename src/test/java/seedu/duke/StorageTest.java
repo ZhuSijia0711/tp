@@ -24,7 +24,6 @@ public class StorageTest {
     void setUp() {
         String userName = "testUser";
         filePath = "test_data/" + userName + ".txt";
-        //File f = new File(filePath);
         Storage.setFolderPath("test_data");
         User.setFolderPath("test_data");
         File folder = new File(folderPath);
