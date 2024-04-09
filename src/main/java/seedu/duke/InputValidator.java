@@ -211,11 +211,13 @@ public class InputValidator {
         String endPattern = "/to\\s+(\\d{1,2}:\\d{2})\\s+";
         String typePattern = "/type\\s+([cfCF])";
         String suffix = "$";
-        String pattern = commandPattern + usersPattern + dayPattern + taskDescriptionPattern + startPattern + endPattern + typePattern + suffix;
+        String pattern = commandPattern + usersPattern + dayPattern + taskDescriptionPattern
+            + startPattern + endPattern + typePattern + suffix;
 
         if (!input.matches(pattern)) {
             throw new InvalidFormatException("[ERROR] Invalid addfor format. " +
-                "Expected format: addfor /user [user1], [user2], ... /on [day] /index [index] /type [f/c]");
+                "Expected format: addfor /user [user1], [user2], ... /on [day] /task [description] " +
+                "/from [start time] /to [end time] /type [f/c]");
         }
     }
 }
