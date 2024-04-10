@@ -122,6 +122,9 @@ public class UI {
     public static void printTimeFrame(LocalTime time1, LocalTime time2) {
         System.out.println("    "+time1 + " - " + time2);
     }
+    public static void printFullDay() {
+        System.out.println("    None");
+    }
     public static void printFreeDay(String day) {
         System.out.println("    ** Whole day is free on " + day);
     }

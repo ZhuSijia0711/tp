@@ -167,8 +167,12 @@ public class Timetable {
             }
             if (previousEndTime.isBefore(LocalTime.MAX)) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                //System.out.println("    "+previousEndTime + " - " + LocalTime.MAX.format(formatter));
-                UI.printTimeFrame(previousEndTime, LocalTime.MAX.format(formatter));
+                if (previousEndTime.format(formatter).equals("23:59")) {
+                    UI.printFullDay();
+                } else {
+                    //System.out.println("    "+previousEndTime + " - " + LocalTime.MAX.format(formatter));
+                    UI.printTimeFrame(previousEndTime, LocalTime.MAX.format(formatter));
+                }
             }
         } else {
             UI.printFreeDay(day);

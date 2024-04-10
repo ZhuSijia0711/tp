@@ -21,6 +21,15 @@ public class InputValidator {
         }
     }
 
+    public static void validateCompareAllInput(String input) throws InvalidFormatException {
+        String regex = "(?i)^compareall(\\s+)?$";
+
+        if (!input.matches(regex)) {
+            throw new InvalidFormatException("[ERROR] Invalid compareall format. " +
+                    "Expected format: compareall");
+        }
+    }
+
     /**
      * Validates correctly formatted addTask command. The expected format is
      * "addtask /on [date] /task [description] /from [start time] /to [start time] /type [type]"
