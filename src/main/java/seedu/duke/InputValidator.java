@@ -47,7 +47,6 @@ public class InputValidator {
         }
     }
     public static void validateAddTaskWDCInput(String input) throws InvalidFormatException {
-        // Define the regex pattern for the expected format with case-insensitive flag
         String regex = "(?i)^addtwdc\\s+/on\\s+(\\w+)\\s+/task\\s+(.+?)\\s" +
                 "+/from\\s+(\\d{1,2}:\\d{2})\\s+/to\\s+(\\d{1,2}:\\d{2})(\\s+/type\\s+[fc])$";
 
