@@ -1,23 +1,67 @@
 Timetable comparison app opened.
 type 'help' for commands.
 Folder created successfully.
-Note: use hh:mm 24hr time format (ex. 13:00)
+**Note: use hh:mm 24hr time format (ex. 13:00)
 List of available commands:
-list: list all users
-bye: exit the app
-current: view current user
-view: view timetable of current user
-next: view your next task
-adduser: add new user
-switch <username>: switch to user
-addtask /on <day> /from <start time> /to <end time>: add task for current user
-addtwdc /on <day> /from <start time> /to <end time>deletetask: delete task
-changetasktiming:
-changetasktype <f/c>: change the type of a task (flexible/confirmed)
-compareall: compare timetables of all users
-compare <user1> <user2>: compare timetables of specified users
-addforall /on <day> /from <start time> /to <end time>: add task for all users
-viewcommonevents: view common events
+List all users:
+list
+_________________________________________
+Exit the app:
+bye
+_________________________________________
+View current user:
+current
+_________________________________________
+View timetable of current user:
+view
+_________________________________________
+View your next task:
+next
+_________________________________________
+Add new user:
+adduser <NAME>
+_________________________________________
+Switch to user:
+switch <USERNAME>
+_________________________________________
+Add task for current user:
+addtask /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>
+_________________________________________
+Add task for current user (check duplicates):
+addtwdc /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>
+_________________________________________
+Add a task for all users:
+addforall /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>
+_________________________________________
+Add a task that repeats over certain days:
+addrepeattask /on <DAY_1 ...> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>
+_________________________________________
+Add a task for certain users:
+addfor /user <U_1, ...> /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>
+_________________________________________
+Delete task:
+deletetask
+_________________________________________
+Change a task's timing:
+changetasktiming /on <DAY> /index <TASK_INDEX> /from <NEW START> /to <NEW END>
+_________________________________________
+Change a task's type:
+changetasktype /on <DAY> /index <TASK_INDEX> /type <f or c>
+_________________________________________
+Compare timetables of all users:
+compareall
+_________________________________________
+Compare timetables between two users:
+compare <USER_1> <USER_2>
+_________________________________________
+List today's tasks:
+todaytasks
+_________________________________________
+List urgent tasks within certain timeframe:
+urgent /in <HOURS>
+_________________________________________
+View common events:
+viewcommonevents
 ____________________________________________________________
 New user added: Simon
 The active user is: Simon
