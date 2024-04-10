@@ -114,6 +114,7 @@ public class Parser {
             }
             todayTask(command,userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
+            InputValidator.validateCompareAllInput(command);
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
@@ -378,7 +379,8 @@ public class Parser {
             if (taskIndex == -1 || taskIndex + 1 >= wordlist.size()) {
                 throw new InvalidFormatException(("Please enter a task name!"));
             }
-            String description = wordlist.get(taskIndex + 1);
+            String description = command.substring(command.indexOf("/task") + "/task".length(),
+                    command.indexOf("/on")).trim();
             int daysIndex = wordlist.indexOf("/on") + 1;
             int endDaysIndex = wordlist.indexOf("/from");
             String[] days = Arrays.copyOfRange(parts, daysIndex, endDaysIndex);
