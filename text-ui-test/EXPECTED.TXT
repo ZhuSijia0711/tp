@@ -1,4 +1,5 @@
 Timetable comparison app opened.
+type 'help' for commands.
 Folder created successfully.
 Note: use hh:mm 24hr time format (ex. 13:00)
 List of available commands:
