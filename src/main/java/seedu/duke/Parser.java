@@ -66,10 +66,14 @@ public class Parser {
             InputValidator.validateAddUserInput(command);
             String[] parts = command.split("\\s+");
             String userName = Parser.capitalizeFirstLetter(parts[1]);
-            User newUser = new User(userName);
-            UI.printNewUser(newUser.getName());
-            userList.addUser(newUser);
-            newUser.getStorage().addUserInFolder();
+            if (userList.containsUser(userName)) {
+                throw new InvalidUserException("User already exists. Use a different name. ");
+            } else {
+                User newUser = new User(userName);
+                UI.printNewUser(newUser.getName());
+                userList.addUser(newUser);
+                newUser.getStorage().addUserInFolder();
+            }
         } else if (command.toLowerCase().startsWith("switch")) {
             InputValidator.validateSwitchInput(command);
             String[] parts = command.split("\\s+");
