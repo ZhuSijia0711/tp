@@ -11,7 +11,8 @@ import static seedu.duke.Timetable.findOverlappingFreeTime;
 
 public class UI {
     public static void printGreeting() {
-        System.out.println("Timetable comparison app opened. ");
+        System.out.println("Timetable comparison app opened. \n" +
+                "type 'help' for commands.");
     }
 
     public static void printBye() {
@@ -39,24 +40,41 @@ public class UI {
     }
 
     public static void printHelp() {
-        System.out.println("Note: use hh:mm 24hr time format (ex. 13:00) \n" +
+        System.out.println(
+                "**Note: use hh:mm 24hr time format (ex. 13:00) \n" +
                 "List of available commands: \n" +
-                "list: list all users \n" +
-                "bye: exit the app \n" +
-                "current: view current user \n" +
-                "view: view timetable of current user \n" +
-                "next: view your next task \n" +
-                "adduser: add new user \n" +
-                "switch <username>: switch to user \n" +
-                "addtask /on <day> /from <start time> /to <end time>: add task for current user\n" +
-                "addtwdc /on <day> /from <start time> /to <end time>" +
-                "deletetask: delete task \n" +
-                "changetasktiming: \n" +
-                "changetasktype <f/c>: change the type of a task (flexible/confirmed)\n" +
-                "compareall: compare timetables of all users \n" +
-                "compare <user1> <user2>: compare timetables of specified users \n" +
-                "addforall /on <day> /from <start time> /to <end time>: add task for all users\n" +
-                "viewcommonevents: view common events ");
+                "List all users: \n" + "list" + UI.Line() +
+                "Exit the app: \n" + "bye" + UI.Line() +
+                "View current user: \n" + "current" + UI.Line() +
+                "View timetable of current user: \n" + "view" + UI.Line() +
+                "View your next task: \n" + "next" + UI.Line() +
+                "Add new user: \n" + "adduser <NAME>" + UI.Line() +
+                "Switch to user: \n" + "switch <USERNAME>" + UI.Line() +
+                "Add task for current user:\n" +
+                    "addtask /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                        + UI.Line() +
+                "Add task for current user (check duplicates):\n" +
+                    "addtwdc /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                        + UI.Line() +
+                "Add a task for all users: \n" +
+                    "addforall /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                        + UI.Line() +
+                "Add a task that repeats over certain days: \n" +
+                    "addrepeattask /on <DAY_1 ...> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                        + UI.Line() +
+                "Add a task for certain users: \n" +
+                "addfor /user <U_1, ...> /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                        + UI.Line() +
+                "Delete task: \n" + "deletetask" + UI.Line() +
+                "Change a task's timing: \n" +
+                    "changetasktiming /on <DAY> /index <TASK_INDEX> /from <NEW START> /to <NEW END>" + UI.Line() +
+                "Change a task's type: \n" +
+                    "changetasktype /on <DAY> /index <TASK_INDEX> /type <f or c>" + UI.Line() +
+                "Compare timetables of all users: \n" + "compareall" + UI.Line() +
+                "Compare timetables between two users: \n" + "compare <USER_1> <USER_2>" + UI.Line() +
+                "List today's tasks: \n" + "todaytasks" + UI.Line() +
+                "List urgent tasks within certain timeframe: \n" + "urgent /in <HOURS>" + UI.Line() +
+                "View common events: \n" + "viewcommonevents");
         printLine();
     }
 
@@ -70,6 +88,10 @@ public class UI {
 
     public static void printLine() {
         System.out.println("____________________________________________________________");
+    }
+
+    public static String Line() {
+        return ("\n_________________________________________\n");
     }
 
     /**
