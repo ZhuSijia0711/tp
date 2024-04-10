@@ -43,37 +43,37 @@ public class UI {
         System.out.println(
                 "**Note: use hh:mm 24hr time format (ex. 13:00) \n" +
                 "List of available commands: \n" +
-                "List all users: \n" + "list" + UI.Line() +
-                "Exit the app: \n" + "bye" + UI.Line() +
-                "View current user: \n" + "current" + UI.Line() +
-                "View timetable of current user: \n" + "view" + UI.Line() +
-                "View your next task: \n" + "next" + UI.Line() +
-                "Add new user: \n" + "adduser <NAME>" + UI.Line() +
-                "Switch to user: \n" + "switch <USERNAME>" + UI.Line() +
+                "List all users: \n" + "list" + UI.line() +
+                "Exit the app: \n" + "bye" + UI.line() +
+                "View current user: \n" + "current" + UI.line() +
+                "View timetable of current user: \n" + "view" + UI.line() +
+                "View your next task: \n" + "next" + UI.line() +
+                "Add new user: \n" + "adduser <NAME>" + UI.line() +
+                "Switch to user: \n" + "switch <USERNAME>" + UI.line() +
                 "Add task for current user:\n" +
                     "addtask /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
-                        + UI.Line() +
+                        + UI.line() +
                 "Add task for current user (check duplicates):\n" +
                     "addtwdc /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
-                        + UI.Line() +
+                        + UI.line() +
                 "Add a task for all users: \n" +
                     "addforall /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
-                        + UI.Line() +
+                        + UI.line() +
                 "Add a task that repeats over certain days: \n" +
                     "addrepeattask /on <DAY_1 ...> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
-                        + UI.Line() +
+                        + UI.line() +
                 "Add a task for certain users: \n" +
                 "addfor /user <U_1, ...> /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
-                        + UI.Line() +
-                "Delete task: \n" + "deletetask" + UI.Line() +
+                        + UI.line() +
+                "Delete task: \n" + "deletetask" + UI.line() +
                 "Change a task's timing: \n" +
-                    "changetasktiming /on <DAY> /index <TASK_INDEX> /from <NEW START> /to <NEW END>" + UI.Line() +
+                    "changetasktiming /on <DAY> /index <TASK_INDEX> /from <NEW START> /to <NEW END>" + UI.line() +
                 "Change a task's type: \n" +
-                    "changetasktype /on <DAY> /index <TASK_INDEX> /type <f or c>" + UI.Line() +
-                "Compare timetables of all users: \n" + "compareall" + UI.Line() +
-                "Compare timetables between two users: \n" + "compare <USER_1> <USER_2>" + UI.Line() +
-                "List today's tasks: \n" + "todaytasks" + UI.Line() +
-                "List urgent tasks within certain timeframe: \n" + "urgent /in <HOURS>" + UI.Line() +
+                    "changetasktype /on <DAY> /index <TASK_INDEX> /type <f or c>" + UI.line() +
+                "Compare timetables of all users: \n" + "compareall" + UI.line() +
+                "Compare timetables between two users: \n" + "compare <USER_1> <USER_2>" + UI.line() +
+                "List today's tasks: \n" + "todaytasks" + UI.line() +
+                "List urgent tasks within certain timeframe: \n" + "urgent /in <HOURS>" + UI.line() +
                 "View common events: \n" + "viewcommonevents");
         printLine();
     }
@@ -90,7 +90,7 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
-    public static String Line() {
+    public static String line() {
         return ("\n_________________________________________\n");
     }
 
