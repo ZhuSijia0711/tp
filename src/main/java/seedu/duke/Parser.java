@@ -19,19 +19,19 @@ public class Parser {
         {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private static final int COMMAND_INDEX_DAY = 2;
-    public static final int USERS_INDEX = 5;
-    public static final int DAY_INDEX = 3;
-    public static final int DESCRIPTION_INDEX = 5;
-    public static final int START_INDEX = 5;
-    public static final int END_INDEX = 3;
-    public static final int TYPE_INDEX = 5;
-    public static final int DAY_INDEX_IN_ADD_FOR_ALL = 2;
-    public static final int USER_PART = 1;
-    public static final int DAY_PART = 2;
-    public static final int DESCRIPTION_PART = 3;
-    public static final int START_PART = 4;
-    public static final int END_PART = 5;
-    public static final int TYPE_PART = 6;
+    private static final int USERS_INDEX = 5;
+    private static final int DAY_INDEX = 3;
+    private static final int DESCRIPTION_INDEX = 5;
+    private static final int START_INDEX = 5;
+    private static final int END_INDEX = 3;
+    private static final int TYPE_INDEX = 5;
+    private static final int DAY_INDEX_IN_ADD_FOR_ALL = 2;
+    private static final int USER_PART = 1;
+    private static final int DAY_PART = 2;
+    private static final int DESCRIPTION_PART = 3;
+    private static final int START_PART = 4;
+    private static final int END_PART = 5;
+    private static final int TYPE_PART = 6;
 
     public static String capitalizeFirstLetter(String input) {
         String lowerCase = input.toLowerCase();
@@ -44,7 +44,7 @@ public class Parser {
      * @param command The users text input.
      */
     public static void parseCommand(String command, UserList userList) throws
-        InvalidFormatException, InvalidDayException, InvalidUserException, NoUserException, IOException {
+            InvalidFormatException, InvalidDayException, InvalidUserException, NoUserException, IOException {
         if (command.equalsIgnoreCase("list")) {
             UI.printListingUsers();
             userList.listAll();
@@ -116,7 +116,7 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("addfor")) {
             InputValidator.validAddFor(command);
             addFor(command, userList);
-        } else if(command.toLowerCase().startsWith("viewcommonevents")) {
+        } else if (command.toLowerCase().startsWith("viewcommonevents")) {
             printConfirmedEvent(userList);
         } else if (command.toLowerCase().startsWith("urgent /in")) {
             try {
