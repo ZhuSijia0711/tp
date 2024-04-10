@@ -11,8 +11,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
-import java.time.chrono.ChronoLocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 public class Parser {
     public static final String[] DAYS = new String[]
@@ -132,7 +135,7 @@ public class Parser {
                 throw new NoUserException();
             }
             printUrgentTasks(command, userList);
-        }else {
+        } else {
             UI.printInvalidCommand();
         }
     }
@@ -157,8 +160,7 @@ public class Parser {
                     for (Task task : urgentTasks) {
                         System.out.println(task);
                     }
-                }
-                else {
+                } else {
                     System.out.println("Urgent tasks within the next " + hours + " hours:");
                     for (Task task : urgentTasks) {
                         System.out.println(task);
