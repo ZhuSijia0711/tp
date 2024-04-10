@@ -7,13 +7,12 @@ import seedu.duke.exceptions.NoUserException;
 import seedu.duke.ui.UI;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.*;
 
 public class Parser {
     public static final String[] DAYS = new String[]
@@ -117,13 +116,62 @@ public class Parser {
         } else if (command.toLowerCase().startsWith("addfor")) {
             InputValidator.validAddFor(command);
             addFor(command, userList);
-        }
-        else if (command.toLowerCase().startsWith("viewcommonevents")) {
+        } else if(command.toLowerCase().startsWith("viewcommonevents")) {
             printConfirmedEvent(userList);
-        } else {
+        } else if (command.toLowerCase().startsWith("urgent /in")) {
+            try {
+                String[] parts = command.split("\\s+");
+                int hours = Integer.parseInt(parts[2]);
+
+                LocalDateTime now = LocalDateTime.now();
+                int currentHour = now.getHour();
+                if(currentHour + hours >= 24){
+                    System.out.println("Hour input exceeds current day.");
+                }
+                LocalDateTime deadline = now.plusHours(hours);
+                List<Task> urgentTasks = findUrgentTasks(userList.getActiveUser(), now, deadline);
+                if (urgentTasks.isEmpty()) {
+                    System.out.println("No urgent tasks within the specified timeframe.");
+                } else {
+                    if(currentHour + hours >= 24){
+                        System.out.println("Urgent tasks until end of today: ");
+                        for (Task task : urgentTasks) {
+                            System.out.println(task);
+                        }
+                    }
+                    else {
+                        System.out.println("Urgent tasks within the next " + hours + " hours:");
+                        for (Task task : urgentTasks) {
+                            System.out.println(task);
+                        }
+                    }
+                }
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                System.out.println("Invalid command format. Please use: urgent /in [hours]");
+            }
+        }else {
             UI.printInvalidCommand();
         }
     }
+
+    private static List<Task> findUrgentTasks(User user, LocalDateTime now, LocalDateTime deadline) {
+        List<Task> urgentTasks = new ArrayList<>();
+        Timetable userTimetable = user.getTimetable();
+        for (Map.Entry<String, ArrayList<Task>> entry : userTimetable.getWeeklyTasks().entrySet()) {
+            ArrayList<Task> tasks = entry.getValue();
+            if (tasks != null) {
+                for (Task task : tasks) {
+                    LocalDateTime taskStartTime = LocalDateTime.of(now.toLocalDate(), task.getStartTime());
+                    if (now.isBefore(taskStartTime) && taskStartTime.isBefore(deadline)) {
+                        urgentTasks.add(task);
+                    }
+                }
+            }
+        }
+        return urgentTasks;
+    }
+
+
 
     private static void changeTaskType(String command, UserList userList) throws InvalidFormatException {
         try {
