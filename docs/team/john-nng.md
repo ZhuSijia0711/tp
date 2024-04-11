@@ -20,7 +20,7 @@ This is a task scheduler and timetable comparison command line app that allows u
 
 
 #### Testing
-- Wrote test for InputValidator class. I wrote J-Unit test for InputValidator class to ensure that the functions were correctly validating various input commands.
+- Wrote test for InputValidator class. I wrote J-Unit test for InputValidator class to ensure that the functions were correctly validating various input commands. Such as Adduser, addtask, deletetask, compareall, compare.
 - Wrote some test in the TimetableTest Class for addtask function and compare functions to see if various task would be added properly and compared properly.
 
 #### Enhancements to Current Features
