@@ -8,11 +8,13 @@ import seedu.duke.exceptions.InvalidFormatException;
 class InputValidatorTest {
     @Test
     public void testAddUser() {
-        String[] inputList = {"adduser john",
-                "adduser john100 ",
-                "ADDUSEr j",
-                "ADDUSER  xjohnx",
-                "addUser 20  "};
+        String[] inputList = {
+            "adduser john",
+            "adduser john100 ",
+            "ADDUSEr j",
+            "ADDUSER  xjohnx",
+            "addUser 20  "
+        };
         for (String input : inputList) {
             try {
                 InputValidator.validateAddUserInput(input);
@@ -100,11 +102,13 @@ class InputValidatorTest {
 
     @Test
     public void testAddTask() {
-        String[] inputList = {"addtask /on MONDAY /task walk dogs /from 10:00 /to 16:00 /type c",
-                "ADDTASK /on tuesday /task walk dogs   /from 00:00 /to 23:59 /type f",
-                "addtask /on MONDAY /task walk dogs100  /from 10:00 /to 16:00 /type c",
-                "Addtask /on sunday   /task walk dogssSS /from 10:00   /to 16:00   /type f",
-                "addtask  /on Friday /task walk dogs /from 10:00 /to 16:00 /type c"};
+        String[] inputList = {
+            "addtask /on MONDAY /task walk dogs /from 10:00 /to 16:00 /type c",
+            "ADDTASK /on tuesday /task walk dogs   /from 00:00 /to 23:59 /type f",
+            "addtask /on MONDAY /task walk dogs100  /from 10:00 /to 16:00 /type c",
+            "Addtask /on sunday   /task walk dogssSS /from 10:00   /to 16:00   /type f",
+            "addtask  /on Friday /task walk dogs /from 10:00 /to 16:00 /type c"
+        };
         for (String input : inputList) {
             try {
                 InputValidator.validateAddTaskInput(input);
@@ -156,11 +160,13 @@ class InputValidatorTest {
 
     @Test
     public void testDeleteTask() {
-        String[] inputList = {"deletetask /on MONDAY /index 1",
-                "deletetask /on saturday /index 100",
-                "Deletetask /on MONDAY /index 12",
-                "DELETETASK /on tuesdAY /index 1",
-                "deleteTASK /on saturday  /index 4000"};
+        String[] inputList = {
+            "deletetask /on MONDAY /index 1",
+            "deletetask /on saturday /index 100",
+            "Deletetask /on MONDAY /index 12",
+            "DELETETASK /on tuesdAY /index 1",
+            "deleteTASK /on saturday  /index 4000"
+        };
         for (String input : inputList) {
             try {
                 InputValidator.validateDeleteTaskInput(input);
@@ -227,7 +233,7 @@ class InputValidatorTest {
             InputValidator.validateCompareAllInput(invalidInput1);
         } catch (InvalidFormatException e) {
             assertEquals("[ERROR] Invalid compareall format. " +
-            "Expected format: compareall", e.getMessage());
+                "Expected format: compareall", e.getMessage());
         }
         String invalidInput2 = "comparall ";
         try {
