@@ -1,5 +1,5 @@
 
-# John Nguyen Project Portfolio Page</h1>
+# John Nguyen Project Portfolio Page
 
 ## Project: Timetable Comparer
 ### Team: AY2324S2-CS2113-T13-2
