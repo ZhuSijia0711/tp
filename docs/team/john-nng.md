@@ -1,7 +1,7 @@
 
 # John Nguyen Project Portfolio Page</h1>
 
-## Project: Task Scheduler and Calendar Comparison App
+## Project: Timetable Comparer
 ### Team: AY2324S2-CS2113-T13-2
 [Code Contribution](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=john-nng&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 
@@ -25,7 +25,7 @@ This is a task scheduler and timetable comparison command line app that allows u
 
 #### Enhancements to Current Features
 - Enchanced the UI ouput for timetables and timetable comparison commands. Making these outputs more readable.
-- Updated the help message UI output. To reflect the complete set of commands and their usages in a clean format.
+- Updated the help message UI output. To reflect the complete set of commands and their usages in a clean format. [PR Here](https://github.com/AY2324S2-CS2113-T13-2/tp/commit/b5974cdf35554456984cd02415fbd7d87facab7a)
 
 #### Documentation
 - Updated Documentation for all commands in User Guide and formatted them in a easy to read manner. Bulk of work done during these PR's ([1](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/9dbe139124adfecf78f4c94d8f662b283788a8fa/docs/UserGuide.md), [2](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/65c01a9d7d4875eedc494afa923108eec9e48055/docs/UserGuide.md), [3](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/47db8ea97ed3da106a83d75a7ae90152a5e80200/docs/UserGuide.md))
