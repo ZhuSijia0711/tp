@@ -497,11 +497,15 @@ public class Parser {
         for (String username : usernames) {
             User user = userList.findUser(username.trim());
             if (user == null) {
-                invalidUsers.add(username.trim());
+                if (!invalidUsers.contains(username.trim())) {
+                    invalidUsers.add(username.trim());
+                }
                 continue;
             }
             if (checkClash(task, user)) {
-                clashedUsers.add(username.trim());
+                if (!clashedUsers.contains(username.trim())) {
+                    clashedUsers.add(username.trim());
+                }
             }
         }
 
@@ -519,8 +523,12 @@ public class Parser {
 
         for (String username : usernames) {
             User user = userList.findUser(username.trim());
-            user.getTimetable().addUserTask(day, task);
-            user.getStorage().writeTaskInFile(user);
+            if (!checkClash(task, user)) {
+                user.getTimetable().addUserTask(day, task);
+                user.getStorage().writeTaskInFile(user);
+            } else {
+                System.out.println("For " + user.getName() + ", the task " + task + " clashes with existing tasks OR already exist!");
+            }
         }
     }
 }
