@@ -527,7 +527,8 @@ public class Parser {
                 user.getTimetable().addUserTask(day, task);
                 user.getStorage().writeTaskInFile(user);
             } else {
-                System.out.println("For " + user.getName() + ", the task " + task + " clashes with existing tasks OR already exist!");
+                System.out.println("For " + user.getName()
+                + ", the task " + task + " clashes with existing tasks OR already exist!");
             }
         }
     }
