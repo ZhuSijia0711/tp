@@ -528,7 +528,7 @@ public class Parser {
                 user.getStorage().writeTaskInFile(user);
             } else {
                 System.out.println("For " + user.getName()
-                + ", the task " + task + " clashes with existing tasks OR already exist!");
+                    + ", the task " + task + " clashes with existing tasks OR already exist!");
             }
         }
     }
