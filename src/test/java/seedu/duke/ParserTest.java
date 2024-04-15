@@ -45,6 +45,14 @@ class ParserTest {
             assertEquals("[ERROR] Invalid addUser format. Expected format: adduser <desired user's name>",
                     e.getMessage());
         }
+
+        try {
+            Parser.parseCommand("addUser User1", userlist);
+            Parser.parseCommand("addUser User1", userlist);
+            fail();
+        } catch (Exception e) {
+            assertEquals("User already exists. Use a different name. ", e.getMessage());
+        }
     }
 
     @Test

@@ -13,11 +13,20 @@ public class InputValidator {
      * @throws InvalidFormatException If the input does not match the expected format: "compare (user1) (user2)".
      */
     public static void validateCompareInput(String input) throws InvalidFormatException {
-        String regex = "(?i)^compare\\s+\\w+\\s+\\w+$";
+        String regex = "(?i)^compare\\s+\\w+\\s+\\w+(\\s+)?$";
 
         if (!input.matches(regex)) {
             throw new InvalidFormatException("[ERROR] Invalid compare format. " +
                     "Expected format: compare <user1> <user2>");
+        }
+    }
+
+    public static void validateCompareAllInput(String input) throws InvalidFormatException {
+        String regex = "(?i)^compareall(\\s+)?$";
+
+        if (!input.matches(regex)) {
+            throw new InvalidFormatException("[ERROR] Invalid compareall format. " +
+                    "Expected format: compareall");
         }
     }
 
@@ -81,7 +90,7 @@ public class InputValidator {
      * @throws InvalidFormatException If the input does not match the expected format: "adduser (user)".
      */
     public static void validateAddUserInput(String input) throws InvalidFormatException {
-        String regex = "(?i)^adduser\\s+\\w+$";
+        String regex = "(?i)^adduser\\s+\\w+(\\s+)?$";
 
         if (!input.matches(regex)) {
             throw new InvalidFormatException("[ERROR] Invalid addUser format. " +

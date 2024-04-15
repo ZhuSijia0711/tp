@@ -1,15 +1,27 @@
 @startuml
-participant Parser
-participant Timetable
-participant Task
+participant ":Parser" as Parser
+participant ":Timetable" as Timetable
+participant ":Task" as Task
 
 Parser -> Timetable: changeTaskType(dayOfWeek, index, newType)
 activate Timetable
 Timetable -> Timetable: capitalizeDay(dayOfWeek)
+activate Timetable
+Timetable --> Timetable: result
+deactivate Timetable
 Timetable -> Timetable: getTasks(dayOfWeek)
+activate Timetable
+Timetable --> Timetable: result
+deactivate Timetable
+
 activate Task
 Timetable -> Task: getTask(index)
 Task -> Task: setType(newType)
+activate Task
+Task --> Task: result
+deactivate Task
+
+
 Task -->Timetable
 Timetable --> Parser:
 deactivate Task

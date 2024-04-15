@@ -1,14 +1,14 @@
 @startuml
-participant Duke as duke
-participant Storage as storage
-participant File as file
-participant UserList as userList
-participant UI as UI
-participant Timetable as timetable
-participant User as user
+scale 1.5
+participant ":Duke" as duke
+participant ":Storage" as storage
+participant ":File" as file
+participant ":UserList" as userList
+participant ":UI" as UI
+participant ":Timetable" as timetable
+participant ":User" as user
 
 
-activate duke
 duke -> storage: createFolder()
 activate storage
 storage -->> duke:
@@ -57,7 +57,7 @@ else
   deactivate UI
 end
 
-
-
 storage --> duke
+deactivate storage
+
 @enduml

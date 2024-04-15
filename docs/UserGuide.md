@@ -75,7 +75,7 @@ The active user is: john
 
 ## Listing all existing users: `list` <a name="list"></a>
 
-View the list of existing user names.
+View the list of existing usernames.
 
 Format: `list`
 
@@ -297,7 +297,9 @@ Expected Output:
 ```
 Timetable has been written to data/user.txt
 Repeated task added successfully!
+
 ```
+
 ## Find urgent tasks which happen in a day within next few hours:`urgent` <a name="urgent"></a>
 
 Format: `urgent /in HOURS`
@@ -309,7 +311,20 @@ Expected output:
 Urgent tasks within the next 3 hours:
 lec (Monday from 12:00 to 13:00) type: c
 ```
-s
+
+### Add a task for multiple users: `addfor` <a name="addfor"></a>
+
+Format: `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
+
+Example: `addfor /user simon, helen, tim /on monday /task project meeting /from 9:00 /to 11:00 /type f`
+
+Expected Output: 
+```
+Timetable has been written to data/Simon.txt
+Timetable has been written to data/Helen.txt
+Timetable has been written to data/Tim.txt
+```
+
 ## List name of commands: `help` <a name="help"></a>
 
 Format: `help`
@@ -347,5 +362,6 @@ The name of the file indicates the owner of the timetable.
 - Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 - List Today's Tasks `todaytask`
 - Add a Recurring task `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+- Add Task For Multiple Users `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
 - Help `help`
 - Exit Program `bye`
