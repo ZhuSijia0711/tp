@@ -11,11 +11,11 @@ Given below are my contributions to the project.
 * **Code Contributed**: https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=z-wenqing&breakdown=true
 
 
-* **New feature**: Added the ability to store user data such as usernames and timetables of each user.
+* **New feature**: Added the ability to store user data such as username and timetable of each user.
   * When the user launches the application for the first time, a designated folder is created in the application's directory to store all data.
   * When a new user is added, a file named after the user's name will be created within the created data folder.
   * Tasks added by users are recorded in their respective files.
-  * On subsequent launches, all the existing users and their corresponding timetables will be retrieved and loaded.
+  * On subsequent launches, all the existing users and their corresponding timetables will be retrieved and loaded, allowing users to check their existing tasks.
 
 
 * **New feature**: Added the feature to check whether the task added clashes with the existing tasks.
