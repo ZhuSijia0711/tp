@@ -22,6 +22,7 @@ Welcome to **TimeTableComparer**! This application is meant for creating and sto
     - [View today's tasks: `todaytask`](#todaytask)
     - [Add a recurring task: `addrepeattask`](#addrepeattask)
     - [View urgent tasks in next few hours: `urgent`](#urgent)
+    - [Add a task for certain users: `addfor`](#addfor)
     - [Help: `help`](#help)
     - [Exit program: `bye`](#bye)
 - [FAQ](#faq)
@@ -312,7 +313,7 @@ Urgent tasks within the next 3 hours:
 lec (Monday from 12:00 to 13:00) type: c
 ```
 
-### Add a task for multiple users: `addfor` <a name="addfor"></a>
+## Add a task for multiple users: `addfor` <a name="addfor"></a>
 
 Format: `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
 
@@ -362,6 +363,6 @@ The name of the file indicates the owner of the timetable.
 - Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 - List Today's Tasks `todaytask`
 - Add a Recurring task `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
-- Add Task For Multiple Users `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
+- Add Task For Certain Users `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
 - Help `help`
 - Exit Program `bye`
