@@ -21,6 +21,7 @@ Welcome to **TimeTableComparer**! This application is meant for creating and sto
     - [Changing a task's type: `changetasktype`](#changetasktype)
     - [View today's tasks: `todaytask`](#todaytask)
     - [Add a recurring task: `addrepeattask`](#addrepeattask)
+    - [View urgent tasks in next few hours: `urgent`](#urgent)
     - [Help: `help`](#help)
     - [Exit program: `bye`](#bye)
 - [FAQ](#faq)
