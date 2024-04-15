@@ -296,7 +296,23 @@ Expected Output:
 ```
 Timetable has been written to data/user.txt
 Repeated task added successfully!
+
 ```
+
+### Add a task for multiple users: `addfor` <a name="addfor"></a>
+
+Format: `addfor /user USER1, USER2, ... /on DAYS /task TASK /from START_TIME /to END_TIME /type F_OR_C`
+
+Example: `addfor /user simon, helen, tim /on monday /task project meeting /from 9:00 /to 11:00 /type f`
+
+Expected Output: 
+```
+Timetable has been written to data/Simon.txt
+Timetable has been written to data/Helen.txt
+Timetable has been written to data/Tim.txt
+
+```
+
 ## List name of commands: `help` <a name="help"></a>
 
 Format: `help`
