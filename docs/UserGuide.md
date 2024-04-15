@@ -362,6 +362,7 @@ The name of the file indicates the owner of the timetable.
 - Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 - List Today's Tasks `todaytask`
 - Add a Recurring task `addrepeattask /task TASK_NAME /on DAYS /from START_TIME /to END_TIME /type F_OR_C`
+- Find urgent tasks in next few hours `urgent /in HOURS`
 - Add Task For Multiple Users `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
 - Help `help`
 - Exit Program `bye`
