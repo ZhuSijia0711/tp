@@ -66,10 +66,14 @@ public class Parser {
             InputValidator.validateAddUserInput(command);
             String[] parts = command.split("\\s+");
             String userName = Parser.capitalizeFirstLetter(parts[1]);
-            User newUser = new User(userName);
-            UI.printNewUser(newUser.getName());
-            userList.addUser(newUser);
-            newUser.getStorage().addUserInFolder();
+            if (userList.containsUser(userName)) {
+                throw new InvalidUserException("User already exists. Use a different name. ");
+            } else {
+                User newUser = new User(userName);
+                UI.printNewUser(newUser.getName());
+                userList.addUser(newUser);
+                newUser.getStorage().addUserInFolder();
+            }
         } else if (command.toLowerCase().startsWith("switch")) {
             InputValidator.validateSwitchInput(command);
             String[] parts = command.split("\\s+");
@@ -110,6 +114,7 @@ public class Parser {
             }
             todayTask(command,userList);
         } else if (command.toLowerCase().startsWith("compareall")) {
+            InputValidator.validateCompareAllInput(command);
             UI.printComparingAll();
             UI.printSharedTime(Timetable.compareAllTimetables(userList));
         } else if (command.toLowerCase().startsWith("compare")) {
@@ -374,7 +379,8 @@ public class Parser {
             if (taskIndex == -1 || taskIndex + 1 >= wordlist.size()) {
                 throw new InvalidFormatException(("Please enter a task name!"));
             }
-            String description = wordlist.get(taskIndex + 1);
+            String description = command.substring(command.indexOf("/task") + "/task".length(),
+                    command.indexOf("/on")).trim();
             int daysIndex = wordlist.indexOf("/on") + 1;
             int endDaysIndex = wordlist.indexOf("/from");
             String[] days = Arrays.copyOfRange(parts, daysIndex, endDaysIndex);
@@ -491,11 +497,15 @@ public class Parser {
         for (String username : usernames) {
             User user = userList.findUser(username.trim());
             if (user == null) {
-                invalidUsers.add(username.trim());
+                if (!invalidUsers.contains(username.trim())) {
+                    invalidUsers.add(username.trim());
+                }
                 continue;
             }
             if (checkClash(task, user)) {
-                clashedUsers.add(username.trim());
+                if (!clashedUsers.contains(username.trim())) {
+                    clashedUsers.add(username.trim());
+                }
             }
         }
 
@@ -513,8 +523,13 @@ public class Parser {
 
         for (String username : usernames) {
             User user = userList.findUser(username.trim());
-            user.getTimetable().addUserTask(day, task);
-            user.getStorage().writeTaskInFile(user);
+            if (!checkClash(task, user)) {
+                user.getTimetable().addUserTask(day, task);
+                user.getStorage().writeTaskInFile(user);
+            } else {
+                System.out.println("For " + user.getName()
+                    + ", the task " + task + " clashes with existing tasks OR already exist!");
+            }
         }
     }
 }

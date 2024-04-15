@@ -34,18 +34,37 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Gets the file path of the timetable of the user.
+     *
+     * @return the string that represents the filepath of the file storing the timetable of the user.
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * Gets the folder path of the folder where all data is stored.
+     *
+     * @return the string that represents the path of the folder where all data is stored.
+     */
     public static String getFolderPath() {
         return folderPath;
     }
 
+    /**
+     * Sets the path of the data folder to a new path.
+     *
+     * @param newPath the string that represents the new path, which should be a relative path.
+     */
     public static void setFolderPath(String newPath) {
         folderPath = newPath;
     }
 
+    /**
+     * Creates a new folder in the same directory when the application is first launched.
+     * Otherwise, print that the folder has already been created.
+     */
     public static void createFolder() {
         File folder = new File(folderPath);
 
@@ -61,6 +80,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Add users that are stored in the data folder to the user list, for a returning user.
+     *
+     * @param userList the list of users added.
+     * @throws FileNotFoundException if the data file is not found.
+     */
     public static void addExistingUsers(UserList userList) throws FileNotFoundException {
         File directory = new File(folderPath);
 
@@ -82,6 +107,12 @@ public class Storage {
 
     }
 
+    /**
+     * Loads data from the data file.
+     *
+     * @param user the user that we want to load data.
+     * @throws FileNotFoundException if the data file is not found.
+     */
     public void loadData(User user) throws FileNotFoundException {
         File f = new File(filePath);
         String day = "";
@@ -101,6 +132,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates a data file for a new user when a new user is added.
+     */
     public void addUserInFolder() {
         File f = new File(filePath);
         try {
