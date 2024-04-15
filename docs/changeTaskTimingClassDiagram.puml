@@ -32,20 +32,20 @@ InputValidator "1" --> "0..1" InvalidFormatException
 UserList "1" --> "1" User
 User "1" --> "1" Timetable
 
-Caller "1" --> "1" InputValidator: <<use>>
-Caller "1" --> "1" UserList: <<use>>
-Caller "1" --> "1" System: <<use>>
-UserList "1" --> "1" System: <<use>>
-InputValidator "1" --> "1" InvalidDayException: <<use>>
-InputValidator "1" --> "1" IndexOutOfBoundsException: <<use>>
-InputValidator "1" --> "1" IllegalArgumentException: <<use>>
-InputValidator "1" --> "1" LocalTime: <<use>>
-Method "1" --> "1" InputValidator: <<use>>
-Method "1" --> "1" UserList: <<use>>
-Method "1" --> "1" User: <<use>>
-Method "1" --> "1" Timetable: <<use>>
-Method "1" --> "1" System: <<use>>
-Timetable "1" --> "0..1" LocalTime: <<use>>
-Timetable "1" --> "0..1" IndexOutOfBoundsException: <<use>>
-Timetable "1" --> "0..1" IllegalArgumentException: <<use>>
+Caller "1" --> "1" InputValidator: use
+Caller "1" --> "1" UserList: use
+Caller "1" --> "1" System: use
+UserList "1" --> "1" System: use
+InputValidator "1" --> "1" InvalidDayException: use
+InputValidator "1" --> "1" IndexOutOfBoundsException: use
+InputValidator "1" --> "1" IllegalArgumentException: use
+InputValidator "1" --> "1" LocalTime: use
+Method "1" --> "1" InputValidator: use
+Method "1" --> "1" UserList: use
+Method "1" --> "1" User: use
+Method "1" --> "1" Timetable: use
+Method "1" --> "1" System: use
+Timetable "1" --> "0..1" LocalTime: use
+Timetable "1" --> "0..1" IndexOutOfBoundsException: use
+Timetable "1" --> "0..1" IllegalArgumentException: use
 @enduml

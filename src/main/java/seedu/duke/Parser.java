@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 public class Parser {
     public static final String[] DAYS = new String[]
@@ -180,14 +179,14 @@ public class Parser {
     private static List<Task> findUrgentTasks(User user, LocalDateTime now, LocalDateTime deadline) {
         List<Task> urgentTasks = new ArrayList<>();
         Timetable userTimetable = user.getTimetable();
-        for (Map.Entry<String, ArrayList<Task>> entry : userTimetable.getWeeklyTasks().entrySet()) {
-            ArrayList<Task> tasks = entry.getValue();
-            if (tasks != null) {
-                for (Task task : tasks) {
-                    LocalDateTime taskStartTime = LocalDateTime.of(now.toLocalDate(), task.getStartTime());
-                    if (now.isBefore(taskStartTime) && taskStartTime.isBefore(deadline)) {
-                        urgentTasks.add(task);
-                    }
+        String currentDayOfWeek = now.getDayOfWeek().toString().toLowerCase(); // Get current day of the week
+        String capitalisedDay = Parser.capitalizeFirstLetter(currentDayOfWeek);
+        ArrayList<Task> tasks = userTimetable.getWeeklyTasks().get(capitalisedDay);
+        if (tasks != null) {
+            for (Task task : tasks) {
+                LocalDateTime taskStartTime = LocalDateTime.of(now.toLocalDate(), task.getStartTime());
+                if (now.isBefore(taskStartTime) && taskStartTime.isBefore(deadline)) {
+                    urgentTasks.add(task);
                 }
             }
         }

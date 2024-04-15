@@ -21,6 +21,7 @@ Welcome to **TimeTableComparer**! This application is meant for creating and sto
     - [Changing a task's type: `changetasktype`](#changetasktype)
     - [View today's tasks: `todaytask`](#todaytask)
     - [Add a recurring task: `addrepeattask`](#addrepeattask)
+    - [View urgent tasks in next few hours: `urgent`](#urgent)
     - [Help: `help`](#help)
     - [Exit program: `bye`](#bye)
 - [FAQ](#faq)
@@ -297,6 +298,18 @@ Expected Output:
 Timetable has been written to data/user.txt
 Repeated task added successfully!
 
+```
+
+## Find urgent tasks which happen in a day within next few hours:`urgent` <a name="urgent"></a>
+
+Format: `urgent /in HOURS`
+
+Example: `urgent /in 3`
+
+Expected output:
+```
+Urgent tasks within the next 3 hours:
+lec (Monday from 12:00 to 13:00) type: c
 ```
 
 ### Add a task for multiple users: `addfor` <a name="addfor"></a>
