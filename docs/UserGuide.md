@@ -299,6 +299,18 @@ Repeated task added successfully!
 
 ```
 
+## Find urgent tasks which happen in a day within next few hours:`urgent` <a name="urgent"></a>
+
+Format: `urgent /in HOURS`
+
+Example: `urgent /in 3`
+
+Expected output:
+```
+Urgent tasks within the next 3 hours:
+lec (Monday from 12:00 to 13:00) type: c
+```
+
 ### Add a task for multiple users: `addfor` <a name="addfor"></a>
 
 Format: `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_TIME /to END_TIME /type F_OR_C`
