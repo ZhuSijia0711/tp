@@ -11,8 +11,7 @@ import static seedu.duke.Timetable.findOverlappingFreeTime;
 
 public class UI {
     public static void printGreeting() {
-        System.out.println("Timetable comparison app opened. \n" +
-                "type 'help' for commands.");
+        System.out.println("Timetable comparison app opened. ");
     }
 
     public static void printBye() {
@@ -41,8 +40,9 @@ public class UI {
 
     public static void printHelp() {
         System.out.println(
-                "**Note: use hh:mm 24hr time format (ex. 13:00) \n" +
-                "List of available commands: \n" +
+                "Note: use hh:mm 24hr time format (ex. 13:00) \n" +
+                "List of available commands: " + UI.line() +
+                "View list of commands (what you are looking at): \n" + "help" + UI.line() +
                 "List all users: \n" + "list" + UI.line() +
                 "Exit the app: \n" + "bye" + UI.line() +
                 "View current user: \n" + "current" + UI.line() +
@@ -57,7 +57,7 @@ public class UI {
                     "addtwdc /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
                         + UI.line() +
                 "Add a task for all users: \n" +
-                    "addforall /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
+                    "addforall /on <DAY> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME>"
                         + UI.line() +
                 "Add a task that repeats over certain days: \n" +
                     "addrepeattask /on <DAY_1 ...> /task <DESCRIPTION> /from <START_TIME> /to <END_TIME> /type <f or c>"
