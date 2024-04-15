@@ -318,6 +318,8 @@ Format: `addfor /user USER1, USER2, ... /on DAYS /task DESCRIPTION /from START_T
 
 Example: `addfor /user simon, helen, tim /on monday /task project meeting /from 9:00 /to 11:00 /type f`
 
+* Note: The usernames have to be separated by ",".
+
 Expected Output: 
 ```
 Timetable has been written to data/Simon.txt
@@ -345,6 +347,10 @@ Expected Output: `Bye.`
 
 **A**: The timetables are stored in the folder named "data" in the same directory. 
 The name of the file indicates the owner of the timetable.
+
+**Q**: Can I delete a user from the userlist?
+
+**A**: No.
 
 ## Command Summary <a name="commandsummary"></a>
 
