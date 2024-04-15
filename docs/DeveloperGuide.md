@@ -101,7 +101,7 @@ The app can store multiple timetables and easily display and compare them automa
 |         | user     | compare two timetables    | see the common time between them                                 |
 | v2.0    | user     | find a to-do item by name | locate a to-do without having to go through the entire list      |
 |         | user     | specify task importance   | remember if a task is important or not                           |
-|         | user     | compare all timetables    | view a summurized timetable comprising of all current timetables |
+|         | user     | compare all timetables    | view a summarized timetable comprising of all current timetables |
 
 
 ## Non-Functional Requirements
