@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 public class Parser {
     public static final String[] DAYS = new String[]
@@ -485,13 +484,14 @@ public class Parser {
         String[] words = command.split("/");
         String users = words[USER_PART].substring(USERS_INDEX).trim(); // to exclude words "/user"
         String day = words[DAY_PART].substring(DAY_INDEX).trim(); // to exclude words "/on"
+        String capitalisedDay = Parser.capitalizeFirstLetter(day);
         String description = words[DESCRIPTION_PART].substring(DESCRIPTION_INDEX).trim(); // to exclude words "/task"
         String start = words[START_PART].substring(START_INDEX).trim(); // to exclude words "/from"
         String end = words[END_PART].substring(END_INDEX).trim(); // to exclude words "/to"
         String type = words[TYPE_PART].substring(TYPE_INDEX).trim(); // to exclude words "/type"
         String[] usernames = users.split(",");
 
-        Task task = new Task(description, day, start, end, type);
+        Task task = new Task(description, capitalisedDay, start, end, type);
         ArrayList<String> clashedUsers = new ArrayList<>();
         ArrayList<String> invalidUsers = new ArrayList<>();
         for (String username : usernames) {
@@ -524,7 +524,7 @@ public class Parser {
         for (String username : usernames) {
             User user = userList.findUser(username.trim());
             if (!checkClash(task, user)) {
-                user.getTimetable().addUserTask(day, task);
+                user.getTimetable().addUserTask(capitalisedDay, task);
                 user.getStorage().writeTaskInFile(user);
             } else {
                 System.out.println("For " + user.getName()
