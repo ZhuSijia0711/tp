@@ -29,3 +29,4 @@ This is a task scheduler and timetable comparison command line app that allows u
 
 #### Documentation
 - Updated Documentation for all commands in User Guide and formatted them in a easy to read manner. Bulk of work done during these PR's ([1](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/9dbe139124adfecf78f4c94d8f662b283788a8fa/docs/UserGuide.md), [2](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/65c01a9d7d4875eedc494afa923108eec9e48055/docs/UserGuide.md), [3](https://github.com/AY2324S2-CS2113-T13-2/tp/blob/47db8ea97ed3da106a83d75a7ae90152a5e80200/docs/UserGuide.md))
+- Updated Documentation for DG, Fixed Class Diagram and Sequence Diagram format errors [PR here](https://github.com/AY2324S2-CS2113-T13-2/tp/commit/afc1f429c45bda99b36cf8cae4ac14941c0ccd2a)
