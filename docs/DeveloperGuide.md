@@ -8,7 +8,7 @@
 
 ### Save timetable function
 The saving timetable mechanism is facilitated by the Storage class. It implements the following operations: 
-* `Storgae#createFolder()`: Creates a folder in the directory where all the users' timetable will be stored in the local computer.
+* `Storage#createFolder()`: Creates a folder in the directory where all the users' timetable will be stored in the local computer.
 * `Storage#addExistingUsers()`: Loops through the folder to add all previous saved users upon opening the app, as well as their corresponding tasks.
 * `Storage#addUserInFolder(User user)`: When a new user is added, a file with the name of the user will be created in the folder.
 * `Storage#writeTaskInFile(User user)`: when a new task of a specific user is added, it will be written into the correct file.
