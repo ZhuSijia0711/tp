@@ -5,7 +5,6 @@ import seedu.duke.ui.UI;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -177,63 +176,5 @@ public class Timetable {
         } else {
             UI.printFreeDay(day);
         }
-    }
-    /**
-     * Adds a task to the timetable with duplication check.
-     *
-     * @param dayOfWeek The day of the week.
-     * @param task      The task to add.
-     * @return True if the task was added successfully, false if a duplicate was found.
-     */
-    public boolean addTaskWithDuplicationCheck(String dayOfWeek, Task task) {
-        String capitalizedDay = dayOfWeek.substring(0, 1).toUpperCase() + dayOfWeek.substring(1);
-        ArrayList<Task> tasksOfDay = weeklyTasks.get(capitalizedDay);
-
-        // Check for duplicates
-        for (Task existingTask : tasksOfDay) {
-            if (existingTask.getDescription().equalsIgnoreCase(task.getDescription())
-                    && existingTask.getStartTime().equals(task.getStartTime())
-                    && existingTask.getEndTime().equals(task.getEndTime())) {
-                System.out.println("Duplicate task detected. Task not added.");
-                return false;
-            }
-        }
-        tasksOfDay.add(task);
-        return true;
-    }
-    /**
-     * Get tasks for today.
-     *
-     * @return An ArrayList of tasks for today.
-     */
-    public ArrayList<Task> getTasksForToday() {
-        Calendar calendar = Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        String day = null;
-        switch (dayOfWeek) {
-        case Calendar.MONDAY:
-            day = "Monday";
-            break;
-        case Calendar.TUESDAY:
-            day = "Tuesday";
-            break;
-        case Calendar.WEDNESDAY:
-            day = "Wednesday";
-            break;
-        case Calendar.THURSDAY:
-            day = "Thursday";
-            break;
-        case Calendar.FRIDAY:
-            day = "Friday";
-            break;
-        case Calendar.SATURDAY:
-            day = "Saturday";
-            break;
-        case Calendar.SUNDAY:
-            day = "Sunday";
-            break;
-        default: break;
-        }
-        return weeklyTasks.get(day);
     }
 }
