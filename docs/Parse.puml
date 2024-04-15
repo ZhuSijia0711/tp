@@ -1,9 +1,9 @@
 @startuml
-participant UI
-participant Parser
-participant UserList
-participant Timetable
-participant InputValidator
+participant ":UI" as UI
+participant ":Parser" as Parser
+participant ":UserList" as UserList
+participant ":Timetable" as Timetable
+participant ":InputValidator" as InputValidator
 
 UI -> Parser: parseCommand(command, userList)
 activate Parser
