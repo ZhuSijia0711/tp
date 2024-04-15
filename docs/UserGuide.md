@@ -358,7 +358,7 @@ The name of the file indicates the owner of the timetable.
 - Delete a Task `deletetask /on DAY /index TASK_NUMBER`
 - Compare Two Timetables `compare NAME_1 NAME_2`
 - Compare All Timetables `compareall`
-- Add a Task For All Users `addforall /on DAY /task DESCRIPTION /from START /to END /type [f/c]`
+- Add a Task For All Users `addforall /on DAY /task DESCRIPTION /from START /to END`
 - Changing a Task's Time `changetasktiming /on DAY /index TASK_INDEX /from TIME /to TIME`
 - Changing a Task's Type `changetasktype /on DAY /index TASK_INDEX /type F_OR_C`
 - List Today's Tasks `todaytask`
