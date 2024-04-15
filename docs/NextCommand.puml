@@ -1,20 +1,42 @@
 @startuml
 autonumber
 
+participant ":Main" as Main
+participant ":Parser" as Parser
+participant ":DayOfWeek" as DayOfWeek
+participant ":Timetable" as Timetable
+participant ":UI" as UI
+
+
 Main -> Parser: (parseCommand("next", userList))
+activate Parser
 DayOfWeek -> Parser: dayOfWeek
 Parser -> Parser: capitalizeDay(dayOfWeek)
+activate Parser
+Parser --> Parser: result
+deactivate Parser
 
 Parser -> Timetable: getWeeklyTasks(dayOfWeek)
-Timetable -> Parser: tasksOfDay
+activate Timetable
+Timetable --> Parser: tasksOfDay
+deactivate Timetable
 Parser -> Parser: tasksOfDay.size()
+activate Parser
+Parser --> Parser: result
+deactivate Parser
 
 alt numOfTasks == 0
     Parser -> UI: printNoTasks()
+    activate UI
+    UI --> Main: display no text
+    deactivate UI
 else
     loop numOfTasks
         alt currentTime < task.startTime
             Parser -> UI: nextTask()
+            activate UI
+
+            deactivate UI
         end
     end
 end
